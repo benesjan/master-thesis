@@ -1,0 +1,15 @@
+/.gradle/
+/.idea/
+/gradle/
+/gradlew
+/gradlew.bat
+
+*.log
+*.toc
+*.aux
+/*.pdf
+*.xml
+*.bcf
+*.blg
+*.bbl
+*.out

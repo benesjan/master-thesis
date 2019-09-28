@@ -1,0 +1,82 @@
+\documentclass[oneside,12pt]{book}
+% oneside - onesided print
+
+%\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,width=150mm,top=25mm,bottom=30mm]{geometry}
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\usepackage{setspace, enumitem, amsmath, amsfonts, amsthm, graphicx, soul, float, multirow, hyperref}
+\usepackage{color, listings}
+
+% Číslo dole a bez názvu kapitoly v headeru
+\pagestyle{plain}
+
+\setstretch{1.5}
+
+\setcounter{secnumdepth}{3}
+
+\bibliography{references}
+
+\definecolor{keywords}{rgb}{0,0,0.7}
+
+\lstset{
+columns=fullflexible,
+keywordstyle=\color{keywords},
+frame=lines,
+language=Python,
+%numbers=left,
+%numbersep=5pt,
+basicstyle=\small,
+%numberstyle=\footnotesize\color{Gray},
+commentstyle=\it\footnotesize\color{Gray}
+}
+
+\newenvironment{boldenv}{\bfseries}{}
+
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+
+\newcommand{\signaturespace}[2]{
+% #1 = šířka tečkované čáry
+% #2 = legenda
+\begingroup
+\renewcommand{\arraystretch}{0}
+\begin{tabular}[t]{cc}
+    \hspace*{0pt}
+    \cleaders\hbox{\kern.1pt.\kern.1pt}\hskip#1\relax
+    \hspace*{0pt}
+    \\[2pt]
+    \scriptsize#2
+\end{tabular}
+\endgroup
+}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definice}[section]
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+    \pagenumbering{gobble}
+
+    \input{cover.tex}
+
+    Před svázáním místo této stránky \fbox{vložit zadání práce} s podpisem děkana.
+    \newpage
+
+    \input{declaration.tex}
+
+%    \input{abstrakt.tex}
+
+    \tableofcontents
+
+    \pagenumbering{arabic}
+
+    \input{chapters/cnn.tex}
+
+    \input{chapters/face-recognition.tex}
+
+%    \setquotestyle{english} % Question marks in place of quotes bug fix
+    \printbibliography
+
+\end{document}

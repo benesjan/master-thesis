@@ -1,0 +1,35 @@
+version '0.0.1'
+
+def mainFile = "thesis"
+
+task compilePdf() {
+    doLast {
+        exec {
+            commandLine "pdflatex ${mainFile}".split()
+        }
+    }
+}
+
+task compileFully() {
+    doLast {
+        exec {
+            commandLine "pdflatex ${mainFile}".split()
+        }
+        exec {
+            commandLine "biber ${mainFile}".split()
+        }
+        exec {
+            commandLine "pdflatex ${mainFile}".split()
+        }
+    }
+}
+
+task cleanLatex() {
+    doLast {
+        FileTree tree = fileTree(dir: './', include: "${mainFile}.*", exclude: ['*.tex', '*.pdf'])
+        tree.each {
+            println "Deleting file " + it.name
+            it.delete()
+        }
+    }
+}
