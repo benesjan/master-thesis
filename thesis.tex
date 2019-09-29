@@ -6,9 +6,9 @@
 \usepackage[a4paper,width=150mm,top=25mm,bottom=30mm]{geometry}
 \usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
 \usepackage{setspace, enumitem, amsmath, amsfonts, amsthm, graphicx, soul, float, multirow, hyperref}
-\usepackage{color, listings}
+\usepackage{xcolor, listings}
 
-% Číslo dole a bez názvu kapitoly v headeru
+% Page number at the end of page and no chapter name in the header
 \pagestyle{plain}
 
 \setstretch{1.5}
@@ -35,23 +35,8 @@ commentstyle=\it\footnotesize\color{Gray}
 
 \newcommand\norm[1]{\left\lVert#1\right\rVert}
 
-\newcommand{\signaturespace}[2]{
-% #1 = šířka tečkované čáry
-% #2 = legenda
-\begingroup
-\renewcommand{\arraystretch}{0}
-\begin{tabular}[t]{cc}
-    \hspace*{0pt}
-    \cleaders\hbox{\kern.1pt.\kern.1pt}\hskip#1\relax
-    \hspace*{0pt}
-    \\[2pt]
-    \scriptsize#2
-\end{tabular}
-\endgroup
-}
-
 \theoremstyle{definition}
-\newtheorem{defn}{Definice}[section]
+\newtheorem{defn}{Definition}[section]
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
@@ -66,11 +51,17 @@ commentstyle=\it\footnotesize\color{Gray}
 
     \input{declaration.tex}
 
-%    \input{abstrakt.tex}
+    \newpage
+
+    \input{acknowledgements.tex}
+
+    \input{abstract.tex}
 
     \tableofcontents
 
     \pagenumbering{arabic}
+
+    \input{chapters/introduction.tex}
 
     \input{chapters/cnn.tex}
 
