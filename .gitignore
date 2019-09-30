@@ -7,7 +7,7 @@
 *.log
 *.toc
 *.aux
-/*.pdf
+*.pdf
 *.xml
 *.bcf
 *.blg
