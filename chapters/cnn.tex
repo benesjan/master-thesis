@@ -52,13 +52,25 @@ h[i, j] = u + \sum_{a,b} V[a,b] \cdot x[i+a,j+b]
 
 As is to be expected, bias \textit{u} and the weight matrix \textit{V} are no longer dependent upon the image
 coordinates \textit{(i, j)}.
-As an example we can think of an airplane detection algorithm whose objective is to find where in the scene is an
-airplane.
+As an example we can think of an airplane detection algorithm whose objective is to find whether there is an airplane
+in arbitrary location of the scene.
 We would do that by sliding one set of weights describing the airplane over the image.
-The algorithm would classify scene location with high impulse response as a location of the airplane.
+The algorithm would classify the scene with high impulse response as containing the airplane.
 This intuitively makes a lot of sense.
 
+This type of invariance is called \textit{translational invariance}.
+
 \subsection{Locality principle}\label{subsec:locality}
+Another principle used in CNNs is so called \textit{locality principle}.
+This principle suggests, that we do not need to look far away from \textit{(i,j)} to gain valuable information about
+what is going on in that particular location.
+This is achieved, mathematically speaking, by limiting \textit{a} and \textit{b} in a range $\Delta$.
+
+\begin{equation}\label{eq:denseinvloc}
+h[i, j] = u + \sum_{a=-\Delta}^{\Delta} \sum_{b=-\Delta}^{\Delta} V[a,b] \cdot x[i+a,j+b]
+\end{equation}
+
+Equation~\ref{eq:denseinvloc} is the final form describing the convolution layer.
 
 \section{Pooling layer}\label{sec:pooling}
 
