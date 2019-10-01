@@ -5,7 +5,7 @@ This is especially useful in the field of computer vision as image data is funda
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{images/cnn/lenet.eps}
-    \caption{Example of CNN model (LeNet 5)~\cite{CNN}}
+    \caption{Example of CNN model (LeNet 5)~\cite{LeNet5}}
     \label{fig:cnn}
 \end{figure}
 
@@ -36,10 +36,9 @@ This makes dense layer impractical when dealing with imagery and that's when con
 into play.
 
 \section{Convolutional layer}\label{sec:convolutional}
-As I hinted in the previous section, the main objective of convolutional layer is to decrease the amount of parameters
-needed.
-This feat was achieved by application of two principles: \textit{invariance}~\ref{subsec:invariance} and
-\textit{locality}~\ref{subsec:locality}.
+As I hinted in the previous section, the main advantage of CNNs~\cite{ConvLayer} is the low amount of parameters needed.
+In the convolutional layer this feat was achieved by application of two principles:
+\textit{invariance}~\ref{subsec:invariance} and \textit{locality}~\ref{subsec:locality}.
 
 \subsection{Invariance principle}\label{subsec:invariance}
 The core of invariance principle is reuse of the weights.
@@ -84,4 +83,18 @@ The first mentioned type, as the name implies, sets the new pixels to zero.
 The second one is more sophisticated and consists in mirroring of the neighboring pixels.
 
 \section{Pooling layer}\label{sec:pooling}
+The main objective of pooling is to decrease the spatial dimension of the inner representation of the data.
+During classification (the most common application of CNNs) we are not interested in the location of the classified
+object within the image.
+The only information that interests us is whether the object is present in the scene or not.
+With this information in mind pooling~\cite{PoolingLayer} was invented.
 
+Pooling layer is similar to convolutional layer in a sense that both are "looking" only at a part of the input at once.
+This point of view (window) is then shifted as I described in the section~\ref{subsec:invariance}.
+The difference is that there is no kernel present in the operation.
+The only thing pooling does is that it selects/computes the most representative value from the window.
+There are two common pooling types: \textit{max pooling} and \textit{average pooling}.
+The first type selects the maximum value and the second one computes average.
+
+Stacking pooling layer on top of convolutional layer is a powerful combination as pooling effectively filters out
+impulse responses corresponding to noise.
