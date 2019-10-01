@@ -1,8 +1,8 @@
 \chapter{Convolutional Neural Networks}\label{ch:cnn}
 Convolutional Neural Networks (CNNs) are a group of models which allow for efficient training on high dimensional data.
-This is especially useful in the field of computer vision as image data is fundamentally high dimensional.
 This feat was achieved by application of two principles: \textit{invariance}~\ref{subsec:invariance} and
-\textit{locality}~\ref{subsec:locality}
+\textit{locality}~\ref{subsec:locality}.
+This is especially useful in the field of computer vision as image data is fundamentally high dimensional.
 
 \begin{figure}[H]
     \centering
@@ -11,19 +11,30 @@ This feat was achieved by application of two principles: \textit{invariance}~\re
     \label{fig:cnn}
 \end{figure}
 
-As we can see in the illustration~\ref{fig:cnn} the model contains many layers.
+The image~\ref{fig:cnn} is an illustration of one of the oldest CNN models \textit{LenNet 5} which was used for
+handwritten character recognition.
+As we can see, there are many layers stacked in the model's architecture.
 This is typical for CNNs and it's a reason why CNNs belong to the class of machine learning methods called
 \textit{deep learning}\footnote{Set of machine learning models with
 \textit{credit assignment path (CAP)} higher than 2.
 The CAP is the chain of transformations from input to output.}
-Typically there are three layer types stacked in the CNN model: \textit{dense}~\ref{sec:dense},
+Usually there are three layer types in the CNN model: \textit{dense}~\ref{sec:dense},
 \textit{convolutional}~\ref{sec:convolutional} and \textit{pooling}~\ref{sec:pooling}.
 
 \section{Dense layer}\label{sec:dense}
+Dense layer is the simplest type of layer present in CNN models.
+Its output is determined simply by multiplication of \textit{inputs} (x) with \textit{weight matrix}
+(denoted V in~\ref{eq:dense}) and addition of \textit{bias} (u).
 
-\begin{equation}
+\begin{equation}\label{eq:dense}
     h[i, j] = u[i,j] + \sum_{a,b} V[i,j,a,b] \cdot x[i+a,j+b]
 \end{equation}
+
+Now let's imagine, that we have greyscale image which is 256 pixel wide and high as an input.
+If we flatten the image to a vector, we get input with $256\cdot256 = 65536$ dimensions.
+Even if we do aggressive reduction to 1000 hidden dimensions, we end up with ~65 million parameters.
+This makes dense layer impractical when dealing with imagery and that's when convolution~\ref{sec:convolutional} comes
+into play.
 
 \section{Convolutional layer}\label{sec:convolutional}
 
