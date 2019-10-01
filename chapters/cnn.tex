@@ -1,7 +1,5 @@
 \chapter{Convolutional Neural Networks}\label{ch:cnn}
 Convolutional Neural Networks (CNNs) are a group of models which allow for efficient training on high dimensional data.
-This feat was achieved by application of two principles: \textit{invariance}~\ref{subsec:invariance} and
-\textit{locality}~\ref{subsec:locality}.
 This is especially useful in the field of computer vision as image data is fundamentally high dimensional.
 
 \begin{figure}[H]
@@ -37,8 +35,29 @@ This makes dense layer impractical when dealing with imagery and that's when con
 into play.
 
 \section{Convolutional layer}\label{sec:convolutional}
+As I hinted in the previous section, the main objective of convolutional layer is to decrease the amount of parameters
+needed.
+This feat was achieved by application of two principles: \textit{invariance}~\ref{subsec:invariance} and
+\textit{locality}~\ref{subsec:locality}.
 
 \subsection{Invariance principle}\label{subsec:invariance}
+The core of invariance principle is reuse of the weights.
+This is achieved by application of the weights on one part of the image, moving the weights by predetermined set
+of pixels (called stride) and then applying the weights again.
+We can have a look at equation~\ref{eq:denseinv} too see how the original equation~\ref{eq:dense} changes.
+
+\begin{equation}\label{eq:denseinv}
+h[i, j] = u + \sum_{a,b} V[a,b] \cdot x[i+a,j+b]
+\end{equation}
+
+As is to be expected, bias \textit{u} and the weight matrix \textit{V} are no longer dependent upon the image
+coordinates \textit{(i, j)}.
+As an example we can think of an airplane detection algorithm whose objective is to find where in the scene is an
+airplane.
+We would do that by sliding one set of weights describing the airplane over the image.
+The algorithm would classify scene location with high impulse response as a location of the airplane.
+This intuitively makes a lot of sense.
+
 \subsection{Locality principle}\label{subsec:locality}
 
 \section{Pooling layer}\label{sec:pooling}
