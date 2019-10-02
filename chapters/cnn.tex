@@ -16,7 +16,7 @@ In the following section~\ref{sec:layer-types} I will deal with layer types used
     \label{fig:cnn}
 \end{figure}
 
-\section{Layer types}\label{sec:layer-types}
+\section{Layer Types}\label{sec:layer-types}
 The image~\ref{fig:cnn} is an illustration of one of the oldest CNN models, called \textit{LenNet 5}, which was used for
 handwritten character recognition.
 
@@ -44,7 +44,7 @@ As I hinted in the previous section, the main advantage of CNNs~\cite{ConvLayer}
 In the convolutional layer this feat was achieved by application of two principles:
 \textit{invariance}~\ref{subsec:invariance} and \textit{locality}~\ref{subsec:locality}.
 
-\subsubsection{Invariance principle}\label{subsec:invariance}
+\subsubsection{Invariance Principle}\label{subsec:invariance}
 The core of invariance principle is reuse of the weights.
 This is achieved by application of the weights on one part of the image, shifting the weights by a predetermined set
 of pixels (called stride) and then applying the weights again.
@@ -65,7 +65,7 @@ This intuitively makes a lot of sense.
 
 This type of invariance is called \textit{translational invariance}.
 
-\subsubsection{Locality principle}\label{subsec:locality}
+\subsubsection{Locality Principle}\label{subsec:locality}
 Another principle used in CNNs is so called \textit{locality principle}.
 This principle suggests, that we do not need to look far away from \textit{(i,j)} to gain valuable information about
 what is going on in that particular location.
@@ -103,7 +103,7 @@ The most common ones are \textit{zero padding} and \textit{reflective padding}.
 The first mentioned type, as the name implies, sets the new pixels to zero.
 The second one is more sophisticated and consists in mirroring of the neighboring pixels.
 
-\section{Use cases}\label{sec:use-cases}
+\section{Use Cases}\label{sec:use-cases}
 As I mentioned in the beginning of the chapter, CNNs are mainly used in the field of
 \textit{computer vision}\footnote{Scientific field dealing with extraction of high level understanding from imagery
 using computers.}.
