@@ -13,3 +13,22 @@ As I mentioned in the definition, there are two main subtasks~\cite{FaceRec}:
 \end{enumerate}
 
 \section{Pipeline}\label{sec:pipeline}
+
+Facial recognition pipeline\footnote{A chain of processing elements, arranged so that the output of each element is the
+input of the next.} usually has the following four steps:
+\begin{enumerate}
+    \item \textbf{Face detection} deals with determination of face location within the image.
+    The output of the algorithm is usually face coordinates and facial landmarks.
+    Landmarks are a set of coordinates marking important points of the face (eyebrows, nose, mouth, \ldots).
+    The knowledge of these points is a necessity for the following step.
+    \item \textbf{Face Alignment} is a task of changing the face position in such a way that it resembles the position
+    of faces on which the Feature Extraction model was trained.
+    In most of the instances this step improves the accuracy.
+    \item \textbf{Feature Extraction} is a process of computing a feature vector\footnote{A feature vector is a vector
+    that contains information describing an object's important characteristics.} of the face.
+    Modern methods use CNNs to accomplish this task.
+    \item \textbf{Feature Matching} uses feature vector from the previous task to identify the person in the image.
+    The algorithm uses a database of pre-computed feature vectors and compares them to the newly extracted one.
+    The identity associated with the feature vector which has the smallest distance from the extracted one is
+    considered to be the identity of the person in the image.
+\end{enumerate}
