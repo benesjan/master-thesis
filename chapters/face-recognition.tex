@@ -26,28 +26,45 @@ input of the next.} usually has the following four steps:
     In most of the instances this step improves the accuracy.
     \item \textbf{Feature extraction} is a process of computing a feature vector\footnote{A feature vector is a vector
     that contains information describing an object's important characteristics.} of the face.
-    Architecture of models used for feature extraction is described in section~\ref{sec:fes-architecture}.
+    Architecture of models used for feature extraction is described in section~\ref{sec:mod-methods}.
     \item \textbf{Feature matching} uses feature vector from the previous task to identify the person in the image.
     The algorithm uses a database of pre-computed feature vectors and compares them to the newly extracted one.
     The identity associated with the feature vector which has the smallest distance from the extracted one is
     considered to be the identity of the person in the image.
 \end{enumerate}
 
-\section{Feature Extraction System Architecture}\label{sec:fes-architecture}
+\section{Overview of Modern Methods}\label{sec:mod-methods}
 In this section I am about to provide an overview of modern methods/models used for facial recognition.
-Models based on CNN architecture\ref{ch:cnn} achieve state-of-the-art results which is the reason why CNNs dominate the
+Models based on CNN architecture~\ref{ch:cnn} achieve state-of-the-art results which is the reason why CNNs dominate the
 field of facial recognition and the field of computer vision as a whole now.
 
 Innovations made in the field of computer vision are usually applicable to the subfield of facial recognition as well.
 This is manifested in usage of the same model architectures in general image classification as well as in facial
 recognition.
 However there is a lot of innovation going on in the design of loss functions which work specifically well when used for
-model training in facial recognition tasks.
-This is the reason why this section is divided in two parts: \textit{models}\ref{subsec:models} and
-\textit{loss functions}\ref{subsec:loss-functions}.
+model training\footnote{Machine learning task of learning a function that maps an input to an output based on example
+input-output pairs.} in facial recognition tasks.
+This is the reason why this section is divided in two parts: \textit{models}~\ref{subsec:models} and
+\textit{loss functions}~\ref{subsec:loss-functions}.
 
 \subsection{Models}\label{subsec:models}
 
 \subsubsection{DeepFace}\label{subsec:deepface}
+DeepFace~\cite{DeepFace} is a system developed by FaceBook Inc. in 2014.
+The research is notable for it's use of frontalization.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{images/face-recognition/deepface.png}
+    \caption{Outline of DeepFace architecture~\cite{DeepFace}}
+    \label{fig:deepface}
+\end{figure}
+
+
+
+\subsubsection{FaceNet}\label{subsec:facenet}
+\subsubsection{ResNet}\label{subsec:resnet}
+\subsubsection{InceptionNet}\label{subsec:inceptionnet}
+\subsubsection{DenseNet}\label{subsec:densenet}
 
 \subsection{Loss Functions}\label{subsec:loss-functions}
