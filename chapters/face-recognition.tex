@@ -51,7 +51,27 @@ This is the reason why this section is divided in two parts: \textit{models}~\re
 
 \subsubsection{DeepFace}\label{subsec:deepface}
 DeepFace~\cite{DeepFace} is a system developed by FaceBook Inc. in 2014.
-The research is notable for it's use of frontalization.
+
+The research is notable for its use of advanced alignment technique which consists of three steps:
+
+\begin{enumerate}
+    \item The first step is \textbf{2D Alignment} and it begins with detection of 6 fiducial points/landmarks.
+    These points and the reference position of points are then used to find a transformation.
+    This transformation then generates 2D aligned and cropped image.
+    \item The second step is \textbf{3D Alignment}.
+    In this step the image is warped onto a generic 3D shape model.
+    This is achieved by localization of 67 fiducial points in the image and then fitting an affine
+    camera\footnote{linear mathematical model to approximate the perspective projection followed by an ideal
+    pinhole camera.} \textit{P} using the generalized least squares solution and the reference position $x_{3d}$ of
+    points on the 3D shape model.
+    \item \textbf{Frontalization} is the final step and it is achieved by a piece-wise affine transformation T from
+    $x_{2d}$ source to $\tilde{x_{3d}}$ target.
+    The target $\tilde{x_{3d}}$ is a list of positions of reference fiducial points from previous step enriched with
+    residuals \textit{r}.
+    These residuals were added to the reference positions $\tilde{x_{3d}}$ to account for non-rigid deformations which
+    are not modeled by the affine camera \textit{P}.
+    Without these residuals, all faces would be warped into the same shape losing important discriminative factors.
+\end{enumerate}
 
 \begin{figure}[H]
     \centering
