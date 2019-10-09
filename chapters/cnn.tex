@@ -20,10 +20,12 @@ In the following section~\ref{sec:layer-types} I will deal with layer types used
 The image~\ref{fig:cnn} is an illustration of one of the oldest CNN models, called \textit{LenNet 5}, which was used for
 handwritten character recognition.
 
-As we can see there are three layer types: \textit{dense}~\ref{sec:dense},
-\textit{convolutional}~\ref{sec:convolutional} and \textit{pooling}~\ref{sec:pooling}.
+As we can see there are three layer types in the illustration~\ref{fig:cnn}: \textit{dense}~\ref{subsec:dense},
+\textit{convolutional}~\ref{subsec:convolutional} and \textit{pooling}~\ref{subsec:pooling}.
+Modern CNNs also usually contain \textit{locally connected layer}~\ref{subsec:lclayer} and
+\textit{ReLU}~\ref{subsec:relu} layer.
 
-\subsection{Dense}\label{sec:dense}
+\subsection{Dense/Fully Connected}\label{subsec:dense}
 Dense layer is the simplest type of layer present in CNN models.
 Its output is determined simply by multiplication of \textit{inputs} (x) with \textit{weight matrix}
 (denoted V in~\ref{eq:dense}, also called kernel) and addition of \textit{bias} (u).
@@ -36,10 +38,10 @@ Its output is determined simply by multiplication of \textit{inputs} (x) with \t
 Now let's imagine, that we have greyscale image which is 256 pixel wide and high as an input.
 If we flatten the image to a vector, we get input with $256\cdot256 = 65536$ dimensions.
 Even if we do aggressive reduction to 1000 hidden dimensions, we end up with ~65 million parameters.
-This makes dense layer impractical when dealing with imagery and that's when convolution~\ref{sec:convolutional} comes
-into play.
+This makes dense layer impractical when dealing with imagery and that's when convolution~\ref{subsec:convolutional}
+comes into play.
 
-\subsection{Convolutional}\label{sec:convolutional}
+\subsection{Convolutional}\label{subsec:convolutional}
 As I hinted in the previous section, the main advantage of CNNs~\cite{ConvLayer} is the low amount of parameters needed.
 In the convolutional layer this feat was achieved by application of two principles:
 \textit{invariance}~\ref{subsec:invariance} and \textit{locality}~\ref{subsec:locality}.
@@ -78,7 +80,7 @@ This is achieved, mathematically speaking, by limiting \textit{a} and \textit{b}
 
 Equation~\ref{eq:denseinvloc} is the final form describing the convolution layer.
 
-\subsection{Pooling}\label{sec:pooling}
+\subsection{Pooling}\label{subsec:pooling}
 The main objective of pooling is to decrease the spatial dimension of the inner representation of the data.
 During classification (the most common application of CNNs) we are not interested in the location of the classified
 object within the image.
@@ -92,8 +94,31 @@ The only thing pooling does is that it selects/computes the most representative 
 There are two common pooling types: \textit{max pooling} and \textit{average pooling}.
 The first type selects the maximum value and the second one computes average.
 
-Stacking pooling layer on top of convolutional layer is a powerful combination as pooling effectively filters out
-impulse responses corresponding to noise.
+Stacking pooling layer on top of convolutional layer is a powerful combination as pooling makes the output of CNNs
+more robust to local translations\cite{DeepFace}.
+
+\subsection{Locally Connected}\label{subsec:lclayer}
+Locally connected layer is similar to convolutional layer but the difference is that every location in the feature map
+learns different set of filters.
+This layer type is for example used by the DeepFace system~\ref{subsubsec:deepface}.
+
+\subsection{ReLU}\label{subsec:relu}
+
+\begin{wrapfigure}{r}{7cm}
+    \label{fig:relu}
+    \includegraphics[width=7cm]{images/cnn/relu.eps}
+    \caption{Illustration of ReLU activation function~\cite{ReLU}}
+\end{wrapfigure}
+
+Rectified linear unit (ReLU) layer applies the following~\ref{eq:relu} activation function to the output of layer.
+In CNNs the layer is usually positioned at the output of convolutional layer~\ref{subsec:convolutional}.
+
+\begin{equation}\label{eq:relu}
+    ReLU(x) = max(0,x)
+\end{equation}
+
+The advantage of ReLU is its efficacy during training and reduced likelihood of vanishing gradient.
+
 
 \section{Padding}\label{subsec:padding}
 To avoid loss of information at the edges of the image we usually use a method called \textit{padding}.
