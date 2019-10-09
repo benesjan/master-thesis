@@ -110,17 +110,20 @@ This layer type is for example used by the DeepFace system~\ref{subsubsec:deepfa
     \caption{Illustration of ReLU activation function~\cite{ReLU}}
 \end{wrapfigure}
 
-Rectified linear unit (ReLU) layer applies the following~\ref{eq:relu} activation function to the output of layer.
+Rectified linear unit (ReLU) layer applies the following~\ref{eq:relu} activation function\footnote{The activation
+function of a node defines the output of that node given an input or set of inputs.} to the output of layer.
 In CNNs the layer is usually positioned at the output of convolutional layer~\ref{subsec:convolutional}.
 
 \begin{equation}\label{eq:relu}
     ReLU(x) = max(0,x)
 \end{equation}
 
-The advantage of ReLU is its efficacy during training and reduced likelihood of vanishing gradient.
+The advantage of ReLU is its efficacy during training and reduced likelihood of vanishing
+gradient\footnote{A situation where a deep neural network is unable to propagate useful gradient information from the
+output end of the model back to the layers near the input end of the model.}.
 
 
-\section{Padding}\label{subsec:padding}
+\section{Padding}\label{sec:padding}
 To avoid loss of information at the edges of the image we usually use a method called \textit{padding}.
 This technique increases the image dimension by pixel addition around the original image.
 There are few padding variants which are differentiated by the value of the new pixels.
