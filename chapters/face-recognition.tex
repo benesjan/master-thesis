@@ -86,14 +86,16 @@ The model was trained on more than 4 million images and as the name of the resea
 results (\textbf{97.35\%} on LFW dataset) almost matched the results of humans (\textbf{97.53\%} on LFW dataset).
 
 
-\subsubsection{FaceNet}\label{subsec:facenet}
+\subsubsection{FaceNet}\label{subsubsec:facenet}
 FaceNet~\cite{FaceNet} is a system developed by researchers from Google Inc. in 2015.
-The accuracy of the model exceeded that of human with \textbf{99.63\%} on LFW dataset.
 
-Interesting innovation of FaceNet is that the output is a vector representing a position in an euclidean space
-(so called embeddings) instead of a number representing identity.
+Interesting innovation of FaceNet lies in the format of its output.
+The output of the network is a vector representing a position in an euclidean space (so called embeddings) instead of a
+number representing identity.
 This approach allows for straight-forward implementation of \textit{verification} and
 \textit{identification}~\ref{ch:face-rec}.
+Implementation of verification involves thresholding the distance between two embeddings; and identification becomes
+k-NN classification problem.
 
 \begin{figure}[H]
     \centering
@@ -102,9 +104,27 @@ This approach allows for straight-forward implementation of \textit{verification
     \label{fig:facenet}
 \end{figure}
 
+The architecture of the model is based on CNNs~\ref{ch:cnn} and loss function used to train the model is called
+\textit{triplet loss}~\ref{subsubsec:triplet-loss}.
 
-\subsubsection{ResNet}\label{subsec:resnet}
-\subsubsection{InceptionNet}\label{subsec:inceptionnet}
-\subsubsection{DenseNet}\label{subsec:densenet}
+The advantages of the model are its accuracy and the compactness of the face representation.
+The accuracy of the model exceeded that of human with \textbf{99.63\%} on LFW dataset and the euclidean space has only
+128 dimensions.
+Another advantage is that the model achieved great results on faces which are not in ideal position without using any
+of the complex 3D modeling techniques (as was the case in DeepFace system~\ref{subsubsec:deepface}).
+To use proper terms the system is \textit{pose invariant}.
+
+\subsubsection{ResNet}\label{subsubsec:resnet}
+\subsubsection{InceptionNet}\label{subsubsec:inceptionnet}
+\subsubsection{DenseNet}\label{subsubsec:densenet}
 
 \subsection{Loss Functions}\label{subsec:loss-functions}
+
+\subsubsection{Triplet Loss}\label{subsubsec:triplet-loss}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{images/face-recognition/tripletloss.jpeg}
+    \caption{Illustration of the triplet loss~\cite{FaceNet}}
+    \label{fig:tripletloss}
+\end{figure}
