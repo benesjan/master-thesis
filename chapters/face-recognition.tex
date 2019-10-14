@@ -87,6 +87,22 @@ results (\textbf{97.35\%} on LFW dataset) almost matched the results of humans (
 
 
 \subsubsection{FaceNet}\label{subsec:facenet}
+FaceNet~\cite{FaceNet} is a system developed by researchers from Google Inc. in 2015.
+The accuracy of the model exceeded that of human with \textbf{99.63\%} on LFW dataset.
+
+Interesting innovation of FaceNet is that the output is a vector representing a position in an euclidean space
+(so called embeddings) instead of a number representing identity.
+This approach allows for straight-forward implementation of \textit{verification} and
+\textit{identification}~\ref{ch:face-rec}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\columnwidth]{images/face-recognition/facenet.png}
+    \caption{Outline of FaceNet architecture~\cite{FaceNet}}
+    \label{fig:facenet}
+\end{figure}
+
+
 \subsubsection{ResNet}\label{subsec:resnet}
 \subsubsection{InceptionNet}\label{subsec:inceptionnet}
 \subsubsection{DenseNet}\label{subsec:densenet}
