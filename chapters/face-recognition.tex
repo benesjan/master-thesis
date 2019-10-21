@@ -126,7 +126,7 @@ figure~\ref{fig:ResNet}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\columnwidth]{images/face-recognition/resnet.png}
+    \includegraphics[width=0.9\columnwidth]{images/face-recognition/resnet.png}
     \caption{Residual learning~\cite{ResNet}}
     \label{fig:ResNet}
 \end{figure}
@@ -143,7 +143,7 @@ A large kernel is preferred when the information is distributed globally and vic
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\columnwidth]{images/face-recognition/inceptionnet.png}
+    \includegraphics[width=0.9\columnwidth]{images/face-recognition/inceptionnet.png}
     \caption{InceptionNet block~\cite{GoingDeeper}}
     \label{fig:InceptionNet}
 \end{figure}
@@ -153,6 +153,22 @@ published by Google Inc.
 Models using inception blocks kept on improving and at the time of writing there is fourth version in use.
 
 \subsubsection{DenseNet}\label{subsubsec:densenet}
+DenseNet~\cite{DenseNet} is a type of CNN~\ref{ch:cnn} which was introduced in 2017.
+The difference from regular CNNs is that every layer is connected to all the subsequent layers.
+Traditional CNN with \textit{L} layers has exactly \textit{L} connections.
+On the other hand DenseNet with the same amount of layers contains $\frac{L\left( L+1 \right)}{2}$ connections.
+The block of layers is illustrated in figure~\ref{fig:DenseNet}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/face-recognition/densenet.png}
+    \caption{A 5-layer dense block~\cite{DenseNet}}
+    \label{fig:DenseNet}
+\end{figure}
+
+DenseNets have several compelling advantages~\cite{DenseNet}.
+They alleviate the vanishing-gradient problem, strengthen feature propagation, encourage feature reuse, and
+substantially reduce the number of parameters.
 
 \subsection{Loss Functions}\label{subsec:loss-functions}
 
