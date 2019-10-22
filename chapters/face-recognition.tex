@@ -41,9 +41,9 @@ field of facial recognition and the field of computer vision as a whole now.
 Innovations made in the field of computer vision are usually applicable to the subfield of facial recognition as well.
 This is manifested in usage of the same model architectures in general image classification as well as in facial
 recognition.
-However there is a lot of innovation going on in the design of loss functions which work specifically well when used for
-model training\footnote{Machine learning task of learning a function that maps an input to an output based on example
-input-output pairs.} in facial recognition tasks.
+On the other hand there is a lot of innovation going on in the design of loss functions which work specifically well
+when used for model training\footnote{Machine learning task of learning a function that maps an input to an output
+based on example input-output pairs.} in facial recognition tasks.
 This is the reason why this section is divided in two parts: \textit{models}~\ref{subsec:models} and
 \textit{loss functions}~\ref{subsec:loss-functions}.
 
@@ -173,6 +173,11 @@ substantially reduce the number of parameters.
 \subsection{Loss Functions}\label{subsec:loss-functions}
 
 \subsubsection{Triplet Loss}\label{subsubsec:triplet-loss}
+Triplet loss~\cite{TripletArticle} is a loss function which can be optimized by minimizing the distance between
+\textit{anchor} and \textit{positive} point while maximizing the distance between \textit{anchor} and \textit{negative}
+point.
+These points are represented by feature vectors.
+The learning process is illustrated in the figure~\ref{fig:tripletloss}.
 
 \begin{figure}[H]
     \centering
@@ -180,3 +185,16 @@ substantially reduce the number of parameters.
     \caption{Illustration of the triplet loss~\cite{FaceNet}}
     \label{fig:tripletloss}
 \end{figure}
+
+Anchor and positive points are vectors which belong to the same class whereas negative point belongs to another one.
+In the context of facial recognition one class is one identity therefore anchor and positive point are vectorised
+representation of two images of one face.
+
+In mathematical terms the loss can be described using Euclidean distance function as follows
+\begin{equation}
+    \sum_{i}^{N} \left[ \norm{f(x_{i}^{a}) - f(x_{i}^{p}))}^2_2
+    - \norm{f(x_{i}^{a}) - f(x_{i}^{n}))}^2_2 + \alpha \right],
+\end{equation}
+where $f(x_{i}^{a})$, $f(x_{i}^{p})$ and $f(x_{i}^{n})$ are feature vectors of anchor, positive and
+negative point of triplet denoted by \textit{i}.
+\textit{N} is the number of triplets in the dataset.
