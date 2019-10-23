@@ -1,5 +1,3 @@
-version '0.0.1'
-
 def mainFile = "thesis"
 
 task compilePdf() {
@@ -26,7 +24,7 @@ task compileFully() {
 
 task cleanLatex() {
     doLast {
-        FileTree tree = fileTree(dir: './', include: "${mainFile}.*", exclude: ['*.tex', '*.pdf'])
+        FileTree tree = fileTree(dir: './', include: "${mainFile}.*", exclude: ['*.tex'])
         tree.each {
             println "Deleting file " + it.name
             it.delete()

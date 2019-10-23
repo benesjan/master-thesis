@@ -3,7 +3,7 @@ Convolutional Neural Network (CNN) is a class of Artificial Neural Networks\foot
 animal brain.}, which allows for efficient training on high dimensional data.
 This is especially useful in the field of computer vision as image data is fundamentally high dimensional.
 
-Architecture of CNNs contains many layers.
+Typical architecture of CNNs contains many layers.
 Because of that, these models belong the class of machine learning methods called
 \textit{deep learning}\footnote{Set of machine learning models with \textit{credit assignment path (CAP)} higher than 2.
 The CAP is the chain of transformations from input to output.}
@@ -27,7 +27,7 @@ Modern CNNs also usually contain \textit{locally connected layer}~\ref{subsec:lc
 
 \subsection{Dense/Fully Connected}\label{subsec:dense}
 Dense layer is the simplest type of layer present in CNN models.
-Its output is determined simply by multiplication of \textit{inputs} (x) with \textit{weight matrix}
+Its output is determined simply by multiplication of its \textit{inputs} (x) with \textit{weight matrix}
 (denoted V in~\ref{eq:dense}, also called kernel) and addition of \textit{bias} (u).
 
 \begin{equation}
@@ -47,8 +47,8 @@ In the convolutional layer this feat was achieved by application of two principl
 \textit{invariance}~\ref{subsec:invariance} and \textit{locality}~\ref{subsec:locality}.
 
 \subsubsection{Invariance Principle}\label{subsec:invariance}
-The core of invariance principle is reuse of the weights.
-This is achieved by application of the weights on one part of the image, shifting the weights by a predetermined set
+The core of invariance principle is reuse of weights.
+This is achieved by application of weights on one part of the image, shifting the weights by a predetermined set
 of pixels (called stride) and then applying the weights again.
 Let us examine the equation~\ref{eq:denseinv} too see how the original equation~\ref{eq:dense} changes.
 
@@ -132,7 +132,7 @@ The first mentioned type, as the name implies, sets the new pixels to zero.
 The second one is more sophisticated and consists in mirroring of the neighboring pixels.
 
 \section{Use Cases}\label{sec:use-cases}
-As I mentioned in the beginning of the chapter, CNNs are mainly used in the field of
+As I mentioned at the beginning of the chapter, CNNs are mainly used in the field of
 \textit{computer vision}\footnote{Scientific field dealing with extraction of high level understanding from imagery
 using computers.}.
 This theses is dealing with a subset of computer vision called \textit{face recognition}\ref{ch:face-rec} in which CNNs
