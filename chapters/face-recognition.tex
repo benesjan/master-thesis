@@ -171,9 +171,14 @@ They alleviate the vanishing-gradient problem, strengthen feature propagation, e
 substantially reduce the number of parameters.
 
 \subsection{Loss Functions}\label{subsec:loss-functions}
+The main objective of research of loss function is to design such a function which leads to a model with superior
+discriminative abilities.
+How well the model discriminates can be measured by the compactness of clusters and the distance between them.
+The goal is for the clusters to be as compact as possible while maximizing the distance in-between them.
+
 
 \subsubsection{Triplet Loss}\label{subsubsec:triplet-loss}
-Triplet loss~\cite{TripletArticle} is a loss function which can be optimized by minimizing the distance between
+Triplet loss~\cite{TripletLoss} is a loss function which can be optimized by minimizing the distance between
 \textit{anchor} and \textit{positive} point while maximizing the distance between \textit{anchor} and \textit{negative}
 point.
 These points are represented by feature vectors.
@@ -182,7 +187,7 @@ The learning process is illustrated in the figure~\ref{fig:tripletloss}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\columnwidth]{images/face-recognition/tripletloss.jpeg}
-    \caption{Illustration of the triplet loss~\cite{FaceNet}}
+    \caption{Illustration of the triplet loss~\cite{TripletLoss}}
     \label{fig:tripletloss}
 \end{figure}
 
@@ -198,6 +203,40 @@ In mathematical terms the loss can be described using Euclidean distance functio
 where $f(x_{i}^{a})$, $f(x_{i}^{p})$ and $f(x_{i}^{n})$ are feature vectors of anchor, positive and
 negative point of triplet denoted by \textit{i}.
 \textit{N} is the number of triplets in the dataset.
+
+\subsubsection{Center Loss}
+
+\subsubsection{Congenerous Cosine Loss}
+Congenerous Cosine Loss~\cite{CocoLoss} (known as COCO loss) is a loss function which was published in 2017.
+Motivation for the development of COCO loss was an observation that standard \textit{cross-entropy loss} defined as
+\begin{equation}
+    - \sum_{c=1}^{M} y_{0,c} log(p_{0,c}),
+\end{equation}
+where \textit{y} is a binary indicator if class label c is the correct classification for observation \textit{o},
+\textit{M} is the number of classes and \textit{p} is the predicted probability of observation \textit{o} belonging
+to \textit{c}, fails to guarantee similarity among samples within a category.
+
+To define the loss we first have to clarify how the centroid of class \textit{k} is computed.
+The centroid\footnote{Center of cluster.} equation is as follows
+\begin{equation}
+    \boldsymbol{c}_{k} = \frac{\sum_{i \in \beta} \delta \left( l_i, k \right)\boldsymbol{f}^{(i)}}
+    {\sum_{i \in \beta} \delta \left( l_i, k \right) + \epsilon} \in \mathbb{R}^{D \times 1},
+\end{equation}
+where $\beta$ is a mini-batch, $D$ is the feature space dimension, $\delta$ is indicator function, $\epsilon$ is a
+trivial number for computation stability, $\boldsymbol{f}^{(i)}$ is the \textit{i}-th feature vector and $l_i$ is
+its label.
+
+Now that we have the centroid equation we can define the term we are trying to maximize during model fitting:
+\begin{equation}
+    p_{l_i}^{(i)} = \frac{exp C(\boldsymbol{f}^{(i)}, \boldsymbol{c}_{l_{i}})}
+    {\sum_{k \neq l} exp C(\boldsymbol{f}^{(i)}, \boldsymbol{c}_{k})} \in \mathbb{R},
+\end{equation}
+where $C$ is standard cosine similarity.
+
+Now we can move on to the final COCO loss function definition:
+\begin{equation}
+    - \sum_{i \in \beta} log \left( p_{l_i}^{(i)} \right).
+\end{equation}
 
 
 \subsubsection{ArcFace Loss}\label{subsubsec:arcface}
