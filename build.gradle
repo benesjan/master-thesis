@@ -1,3 +1,5 @@
+version = "0.1.0"
+
 def mainFile = "thesis"
 
 task compilePdf() {
@@ -28,6 +30,14 @@ task cleanLatex() {
         tree.each {
             println "Deleting file " + it.name
             it.delete()
+        }
+    }
+}
+
+task export() {
+    doLast {
+        exec {
+            commandLine "cp ${mainFile}.pdf /home/honza/Downloads/thesis_${version}.pdf".split()
         }
     }
 }
