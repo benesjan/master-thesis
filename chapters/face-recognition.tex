@@ -185,7 +185,7 @@ The goal is for the clusters to be as compact as possible while maximizing the d
 
 \subsubsection{Softmax Loss}\label{subsubsec:softmax-loss}
 Softmax~\cite{ArcFace} is the most widely used loss function and its definition is as follows:
-\begin{equation}
+\begin{equation}\label{eq:softmax}
     L_1 = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}{\sum_{j-1}^{n} e^{W^T_{j} x_{i} + b_{j}}},
 \end{equation}
 where $x_i \in \mathbb{R}^{d}$ denotes the feature vector of the \textit{i}-th sample belonging to the $y_i$-th class.
