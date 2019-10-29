@@ -48,6 +48,13 @@ This is the reason why this section is divided in two parts: \textit{models}~\re
 \textit{loss functions}~\ref{subsec:loss-functions}.
 
 \subsection{Models}\label{subsec:models}
+There are two main approaches of training CNNs for face recognition.
+
+The first one is to train a multi-class classifier which can separate identities directly.
+An example of such system is DeepFace~\ref{subsubsec:deepface}.
+
+The second approach is to learn embedding using a triplet loss~\ref{subsubsec:triplet-loss} function or similar.
+FaceNet~\ref{subsubsec:facenet} is a known example of a system being trained using the second approach.
 
 \subsubsection{DeepFace}\label{subsubsec:deepface}
 DeepFace~\cite{DeepFace} is a system developed by FaceBook Inc. in 2014.
@@ -205,6 +212,8 @@ negative point of triplet denoted by \textit{i}.
 \textit{N} is the number of triplets in the dataset.
 
 \subsubsection{Center Loss}
+
+\subsubsection{SphereFace}
 
 \subsubsection{Congenerous Cosine Loss}
 Congenerous Cosine Loss~\cite{CocoLoss} (known as COCO loss) is a loss function which was published in 2017.
