@@ -183,6 +183,15 @@ discriminative abilities.
 How well the model discriminates can be measured by the compactness of clusters and the distance between them.
 The goal is for the clusters to be as compact as possible while maximizing the distance in-between them.
 
+\subsubsection{Softmax Loss}\label{subsubsec:softmax-loss}
+Softmax~\cite{ArcFace} is the most widely used loss function and its definition is as follows:
+\begin{equation}
+    L_1 = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}{\sum_{j-1}^{n} e^{W^T_{j} x_{i} + b_{j}}},
+\end{equation}
+where $x_i \in \mathbb{R}^{d}$ denotes the feature vector of the \textit{i}-th sample belonging to the $y_i$-th class.
+$W_j \in \mathbb{R}^{d}$ is the \textit{j}-th column of the weight matrix $W \in \mathbb{R}^{d \times n}$ and \textit{b}
+is the corresponding bias term.
+\textit{N} is the batch size and \textit{n} is the class number.
 
 \subsubsection{Triplet Loss}\label{subsubsec:triplet-loss}
 Triplet loss~\cite{TripletLoss} is a loss function which can be optimized by minimizing the distance between
