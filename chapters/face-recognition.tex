@@ -188,7 +188,7 @@ Softmax~\cite{ArcFace} is the most widely used loss function in general classifi
 follows:
 \begin{equation}
     \label{eq:softmax}
-    \mathcal{L}_1 = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}
+    \mathcal{L}_S = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}
     {\sum_{j-1}^{n} e^{W^T_{j} x_{i} + b_{j}}},
 \end{equation}
 where $x_i \in \mathbb{R}^{d}$ denotes the feature vector of the \textit{i}-th sample belonging to the $y_i$-th class.
@@ -256,6 +256,24 @@ The center loss function is intuitively defined by the following equation:
     \mathcal{L}_C = \frac{1}{2} \sum_{i=1}^{m} \norm{x_i - c_{y_i}}_2^2,
 \end{equation}
 where $c_{y_i} \in \mathbb{R}^{d}$ denotes the $y_i$-th class center of the features.
+Recomputing the centers by taking the average of the features over the whole training set id too inefficient and
+impractical.
+
+To address this problem the authors proposed updating the centers based on a mini-batch instead of the whole training
+set.
+To avoid large perturbations caused by mislabeled samples, there is a parameter $\alpha$ with which we control the
+learning rate of the centers.
+
+The final loss is described by the following formula:
+\begin{equation}
+    \label{eq:centerloss}
+    \mathcal{L} = \mathcal{L}_S + \mathcal{L}_C = -\sum_{i=1}^{m} log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}
+    {\sum_{j-1}^{n} e^{W^T_{j} x_{i} + b_{j}}} + \frac{\lambda}{2} \sum_{i=1}^{m} \norm{x_i - c_{y_i}}_2^2,
+\end{equation}
+
+Figure~\ref{fig:centerlosslambda} is a great visualization of the effect of hyperparameter $\alpha$ upon the cluster
+compactness.
+As is to be expected, higher values of the parameter result in more compact clusters.
 
 \begin{figure}[H]
     \centering
