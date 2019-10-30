@@ -196,8 +196,12 @@ is the corresponding bias term.
 
 Major drawback of softmax loss is that it doesn't encourage cluster compactness.
 In other words, it fails to guarantee similarity among samples within a category.
-This makes the loss insufficient for facial recognition tasks and it's the main reason why the following losses
-where invented.
+This makes the learned features not discriminative enough for the open-set face recognition
+problem~\footnote{Recognition of samples which were not present in the training dataset.}.
+
+The second issue is that the dimension of the output weight matrix grows linearly with the number of identities in the
+training set.
+This is impractical for large scale deployment.
 
 \subsubsection{Triplet Loss}\label{subsubsec:triplet-loss}
 Triplet loss~\cite{TripletLoss} is a loss function which can be optimized by minimizing the distance between
