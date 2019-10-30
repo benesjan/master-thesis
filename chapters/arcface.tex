@@ -1,11 +1,5 @@
 \chapter{ArcFace}\label{ch:arcface}
 ArcFace~\cite{ArcFace} is a research which became public in 2018 and achieved state-of-the-art results on LFW dataset.
-The objective of the research was to design a loss function which solves the main drawbacks of \textit{sofmax loss}
-(drawbacks described in the previous chapter~\ref{subsubsec:softmax-loss}) and the \textit{triplet loss}.
-
-The drawbacks of \textit{triplet loss} are the demands entailed by the construction of the triplets.
-The number of those is subject to combinatorial explosion.
-This is a serious issue especially for large datasets.
 
 ArcLoss is based on the equation of \textit{softmax loss}~\ref{eq:softmax}.
 There are few steps separating the original and the improved version:
