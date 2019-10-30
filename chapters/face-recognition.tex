@@ -184,7 +184,8 @@ How well the model discriminates can be measured by the compactness of clusters 
 The goal is for the clusters to be as compact as possible while maximizing the distance in-between them.
 
 \subsubsection{Softmax Loss}\label{subsubsec:softmax-loss}
-Softmax~\cite{ArcFace} is the most widely used loss function and its definition is as follows:
+Softmax~\cite{ArcFace} is the most widely used loss function in general classification tasks and its definition is as
+follows:
 \begin{equation}\label{eq:softmax}
     L_1 = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}{\sum_{j-1}^{n} e^{W^T_{j} x_{i} + b_{j}}},
 \end{equation}
@@ -192,6 +193,11 @@ where $x_i \in \mathbb{R}^{d}$ denotes the feature vector of the \textit{i}-th s
 $W_j \in \mathbb{R}^{d}$ is the \textit{j}-th column of the weight matrix $W \in \mathbb{R}^{d \times n}$ and \textit{b}
 is the corresponding bias term.
 \textit{N} is the batch size and \textit{n} is the class number.
+
+Major drawback of softmax loss is that it doesn't encourage cluster compactness.
+In other words, it fails to guarantee similarity among samples within a category.
+This makes the loss insufficient for facial recognition tasks and it's the main reason why the following losses
+where invented.
 
 \subsubsection{Triplet Loss}\label{subsubsec:triplet-loss}
 Triplet loss~\cite{TripletLoss} is a loss function which can be optimized by minimizing the distance between
@@ -226,13 +232,6 @@ negative point of triplet denoted by \textit{i}.
 
 \subsubsection{Congenerous Cosine Loss}
 Congenerous Cosine Loss~\cite{CocoLoss} (known as COCO loss) is a loss function which was published in 2017.
-Motivation for the development of COCO loss was an observation that standard \textit{cross-entropy loss} defined as
-\begin{equation}
-    - \sum_{c=1}^{M} y_{0,c} log(p_{0,c}),
-\end{equation}
-where \textit{y} is a binary indicator if class label c is the correct classification for observation \textit{o},
-\textit{M} is the number of classes and \textit{p} is the predicted probability of observation \textit{o} belonging
-to \textit{c}, fails to guarantee similarity among samples within a category.
 
 To define the loss we first have to clarify how the centroid of class \textit{k} is computed.
 The centroid\footnote{Center of cluster.} equation is as follows
