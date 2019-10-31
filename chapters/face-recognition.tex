@@ -264,6 +264,13 @@ set.
 To avoid large perturbations caused by mislabeled samples, there is a parameter $\alpha$ with which we control the
 learning rate of the centers.
 
+In the equation~\ref{eq:centup} we can see how the center update is computed:
+\begin{align}
+    \frac{\partial \mathcal{L}_C}{\partial x_i} &= x_i - c_{y_i} \\
+    \Delta c_j &= \frac{\sum_{i=1}^m \delta(y_i=j) \cdot (c_j-x_i)}{1+\sum_{i=1}^m \delta(y_i=j)}, \label{eq:centup}
+\end{align}
+where $\delta(condition)$ is $1$ if the condition is satisfied and $0$ otherwise.
+
 The final loss is described by the following formula:
 \begin{equation}
     \label{eq:centerloss}
