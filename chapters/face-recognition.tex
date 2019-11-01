@@ -321,8 +321,8 @@ The research significantly distinguishes itself from the previously mentioned lo
 SphereFace uses angular margin instead.
 This has proven to be highly effective in face recognition tasks.
 
-SphereFace loss originates from the softmax loss and its name was inspired by the fact that the features are projected
-onto a hypersphere manifold.
+SphereFace loss originates from the softmax loss~\ref{subsubsec:softmax-loss} and its name was inspired by the fact
+that the features are projected onto a hypersphere manifold.
 
 To derive SphereFace loss from softmax loss we first incorporate the angle into the softmax equation using the dot
 product definition ($a \cdot b = \norm{a} \norm{b} cos \theta$):
@@ -331,8 +331,11 @@ product definition ($a \cdot b = \norm{a} \norm{b} cos \theta$):
     \mathcal{L}_S &= -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}
     {\sum_{j-1}^{n} e^{W^T_{j} x_{i} + b_{j}}} \\
     &= -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{\norm{W_{y_i}} \norm{x_i} cos(\theta_{y_i,i}) + b_{y_i}}}
-    {\sum_{j-1}^{n} e^{\norm{W_j} \norm{x_{i}} cos(\theta_{j,i}) + b_{j}}}
+    {\sum_{j-1}^{n} e^{\norm{W_j} \norm{x_{i}} cos(\theta_{j,i}) + b_{j}}},
 \end{align*}
+where $\theta_{j,i}$ is the angle between vector $W_j$ and $x_i$.
+The meanings of the remaining symbols are equal to those in the softmax equation~\ref{eq:softmax}.
+
 
 Next we normalize $\norm{W_j} = 1, \forall j$ and set the bias term to 0.
 \begin{equation}
@@ -340,19 +343,25 @@ Next we normalize $\norm{W_j} = 1, \forall j$ and set the bias term to 0.
     {\sum_{j-1}^{n} e^{\norm{x_{i}} cos(\theta_{j,i})}}
 \end{equation}
 While it's possible to learn features with the modified loss the features are not discriminative enough.
-To improve the discriminative power angular margin was incorporated.
+To improve the discriminative power angular margin was incorporated:
 \begin{equation}\label{eq:ang}
     \mathcal{L}_{ang} = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{\norm{x_i} cos(m\theta_{y_i,i})}}
-    {e^{\norm{x_i} cos(m\theta_{y_i,i})} + \sum_{j \neq y_i} e^{\norm{x_{i}} cos(\theta_{j,i})}}
+    {e^{\norm{x_i} cos(m\theta_{y_i,i})} + \sum_{j \neq y_i} e^{\norm{x_{i}} cos(\theta_{j,i})}},
 \end{equation}
+where $\theta_{y_i,i}$ lies in $\left[ 0, \frac{\pi}{m} \right]$.
 
 To make the loss~\ref{eq:ang} optimizable for CNNs the definition range of $cos(\theta_{y_i},i)$ is expanded.
 This is achieved by replacing the cosine term with monotonically decreasing angle function $\Psi(\theta_{y_i},i)$
-
 \begin{equation}
     \mathcal{L}_{ang} = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{\norm{x_i} \Psi(m\theta_{y_i,i})}}
     {e^{\norm{x_i} \Psi(m\theta_{y_i,i})} + \sum_{j \neq y_i} e^{\norm{x_{i}} \Psi(\theta_{j,i})}}
 \end{equation}
+The angle function has the following definition:
+\begin{equation}
+    \Psi(\theta_{y_i,i}) = (-1)^{k} cos(\theta_{y_{i},i}) -2k,
+\end{equation}
+where $k \in \left[ 0, m-1 \right]$.
+Parameter $m \geq 1$ gives us the control over the angular margin size.
 
 
 \subsubsection{ArcFace Loss}\label{subsubsec:arcface}
