@@ -334,6 +334,25 @@ product definition ($a \cdot b = \norm{a} \norm{b} cos \theta$):
     {\sum_{j-1}^{n} e^{\norm{W_j} \norm{x_{i}} cos(\theta_{j,i}) + b_{j}}}
 \end{align*}
 
+Next we normalize $\norm{W_j} = 1, \forall j$ and set the bias term to 0.
+\begin{equation}
+    \mathcal{L}_{modified} = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{\norm{x_i} cos(\theta_{y_i,i})}}
+    {\sum_{j-1}^{n} e^{\norm{x_{i}} cos(\theta_{j,i})}}
+\end{equation}
+While it's possible to learn features with the modified loss the features are not discriminative enough.
+To improve the discriminative power angular margin was incorporated.
+\begin{equation}\label{eq:ang}
+    \mathcal{L}_{ang} = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{\norm{x_i} cos(m\theta_{y_i,i})}}
+    {e^{\norm{x_i} cos(m\theta_{y_i,i})} + \sum_{j \neq y_i} e^{\norm{x_{i}} cos(\theta_{j,i})}}
+\end{equation}
+
+To make the loss~\ref{eq:ang} optimizable for CNNs the definition range of $cos(\theta_{y_i},i)$ is expanded.
+This is achieved by replacing the cosine term with monotonically decreasing angle function $\Psi(\theta_{y_i},i)$
+
+\begin{equation}
+    \mathcal{L}_{ang} = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{\norm{x_i} \Psi(m\theta_{y_i,i})}}
+    {e^{\norm{x_i} \Psi(m\theta_{y_i,i})} + \sum_{j \neq y_i} e^{\norm{x_{i}} \Psi(\theta_{j,i})}}
+\end{equation}
 
 
 \subsubsection{ArcFace Loss}\label{subsubsec:arcface}
