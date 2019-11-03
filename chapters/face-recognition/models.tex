@@ -62,8 +62,9 @@ k-NN classification problem.
     \label{fig:facenet}
 \end{figure}
 
-The architecture of the model is based on CNNs~\ref{ch:cnn} and loss function used to train the model is called
-\textit{triplet loss}~\ref{subsubsec:triplet-loss}.
+The loss function used to train the model is called \textit{triplet loss}~\ref{subsubsec:triplet-loss}.
+Researches at Google came up with new online method\footnote{Training samples are selected during training.} of which
+ensures rising difficulty of triplets as the network trains.
 
 The advantages of the model are its accuracy and the compactness of the face representation.
 The accuracy of the model exceeded that of human with \textbf{99.63\%} on LFW dataset and the euclidean space has only
