@@ -34,8 +34,19 @@ input of the next.} usually has the following four steps:
 \end{enumerate}
 
 \section{Datasets}\label{sec:datasets}
+In this section I will briefly describe datasets used for training and evaluation of facial recognition models.
+There are too many different datasets used in practice.
+For this reason I will focus only on those mentioned in this text.
 
 \subsection{LFW}\label{subsec:lfw}
+LFW is an acronym for Labeled Faces in the Wild.
+The dataset contains 13,000 images and 1680 identities.
+Every identity is represented by at least two samples.
+The faces were detected by Viola-Jones face detector\footnote{Real-time object detection framework.}.
+
+There are now four publicly used versions of the dataset.
+These versions are differentiated by the type of preprocessing (different methods of alignment) applied to the images.
+
 \subsection{YTF}\label{subsec:ytf}
 \subsection{MS-Celeb-1M}\label{subsec:ms1m}
 
