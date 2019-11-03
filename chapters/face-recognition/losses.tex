@@ -1,5 +1,5 @@
 \subsection{Loss Functions}\label{subsec:loss-functions}
-The main objective of research of loss function is to design such a function which leads to a model with superior
+The main objective of research of loss function is to design a function which leads to a model with superior
 discriminative abilities.
 How well the model discriminates can be measured by the compactness of clusters and the distance between them.
 The goal is for the clusters to be as compact as possible while maximizing the distance in-between them.
@@ -9,7 +9,7 @@ Softmax~\cite{ArcFace} is the most widely used loss function in general classifi
 follows:
 \begin{equation}
     \label{eq:softmax}
-    \mathcal{L}_S = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}
+    \mathcal{L}_S = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}
     {\sum_{j-1}^{n} e^{W^T_{j} x_{i} + b_{j}}},
 \end{equation}
 where $x_i \in \mathbb{R}^{d}$ denotes the feature vector of the \textit{i}-th sample belonging to the $y_i$-th class.
@@ -95,7 +95,7 @@ where $\delta(condition)$ is $1$ if the condition is satisfied and $0$ otherwise
 The final loss is described by the following formula:
 \begin{equation}
     \label{eq:centerloss}
-    \mathcal{L} = \mathcal{L}_S + \mathcal{L}_C = -\sum_{i=1}^{m} log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}
+    \mathcal{L} = \mathcal{L}_S + \mathcal{L}_C = -\sum_{i=1}^{m} \log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}
     {\sum_{j-1}^{n} e^{W^T_{j} x_{i} + b_{j}}} + \frac{\lambda}{2} \sum_{i=1}^{m} \norm{x_i - c_{y_i}}_2^2,
 \end{equation}
 
@@ -133,7 +133,7 @@ where $C$ is standard cosine similarity.
 
 Now we can move on to the final COCO loss function definition:
 \begin{equation}
-    - \sum_{i \in \beta} log \left( p_{l_i}^{(i)} \right).
+    - \sum_{i \in \beta} \log \left( p_{l_i}^{(i)} \right).
 \end{equation}
 
 \subsubsection{SphereFace Loss}
@@ -146,13 +146,13 @@ SphereFace loss originates from the softmax loss~\ref{subsubsec:softmax-loss} an
 that the features are projected onto a hypersphere manifold.
 
 To derive SphereFace loss from softmax loss we first incorporate the angle into the softmax equation using the dot
-product definition ($a \cdot b = \norm{a} \norm{b} cos \theta$):
+product definition ($a \cdot b = \norm{a} \norm{b} \cos \theta$):
 
 \begin{align*}
-    \mathcal{L}_S &= -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}
+    \mathcal{L}_S &= -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}
     {\sum_{j-1}^{n} e^{W^T_{j} x_{i} + b_{j}}} \\
-    &= -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{\norm{W_{y_i}} \norm{x_i} cos(\theta_{y_i,i}) + b_{y_i}}}
-    {\sum_{j-1}^{n} e^{\norm{W_j} \norm{x_{i}} cos(\theta_{j,i}) + b_{j}}},
+    &= -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{\norm{W_{y_i}} \norm{x_i} \cos(\theta_{y_i,i}) + b_{y_i}}}
+    {\sum_{j-1}^{n} e^{\norm{W_j} \norm{x_{i}} \cos(\theta_{j,i}) + b_{j}}},
 \end{align*}
 where $\theta_{j,i}$ is the angle between vector $W_j$ and $x_i$.
 The meanings of the remaining symbols are equal to those in the softmax equation~\ref{eq:softmax}.
@@ -160,26 +160,27 @@ The meanings of the remaining symbols are equal to those in the softmax equation
 
 Next we normalize $\norm{W_j} = 1, \forall j$ and set the bias term to 0.
 \begin{equation}
-    \mathcal{L}_{modified} = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{\norm{x_i} cos(\theta_{y_i,i})}}
-    {\sum_{j-1}^{n} e^{\norm{x_{i}} cos(\theta_{j,i})}}
+    \mathcal{L}_{modified} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{\norm{x_i} \cos(\theta_{y_i,i})}}
+    {\sum_{j-1}^{n} e^{\norm{x_{i}} \cos(\theta_{j,i})}}
 \end{equation}
 While it's possible to learn features with the modified loss the features are not discriminative enough.
 To improve the discriminative power angular margin was incorporated:
-\begin{equation}\label{eq:ang}
-\mathcal{L}_{ang} = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{\norm{x_i} cos(m\theta_{y_i,i})}}
-{e^{\norm{x_i} cos(m\theta_{y_i,i})} + \sum_{j \neq y_i} e^{\norm{x_{i}} cos(\theta_{j,i})}},
+\begin{equation}
+    \label{eq:ang}
+    \mathcal{L}_{ang} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{\norm{x_i} \cos(m\theta_{y_i,i})}}
+    {e^{\norm{x_i} \cos(m\theta_{y_i,i})} + \sum_{j \neq y_i} e^{\norm{x_{i}} \cos(\theta_{j,i})}},
 \end{equation}
 where $\theta_{y_i,i}$ lies in $\left[ 0, \frac{\pi}{m} \right]$.
 
-To make the loss~\ref{eq:ang} optimizable for CNNs the definition range of $cos(\theta_{y_i},i)$ is expanded.
+To make the loss~\ref{eq:ang} optimizable for CNNs the definition range of $\cos(\theta_{y_i},i)$ is expanded.
 This is achieved by replacing the cosine term with monotonically decreasing angle function $\Psi(\theta_{y_i},i)$
 \begin{equation}
-    \mathcal{L}_{ang} = -\frac{1}{N} \sum_{i=1}^{N} log \frac{e^{\norm{x_i} \Psi(m\theta_{y_i,i})}}
+    \mathcal{L}_{ang} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{\norm{x_i} \Psi(m\theta_{y_i,i})}}
     {e^{\norm{x_i} \Psi(m\theta_{y_i,i})} + \sum_{j \neq y_i} e^{\norm{x_{i}} \Psi(\theta_{j,i})}}
 \end{equation}
 The angle function has the following definition:
 \begin{equation}
-    \Psi(\theta_{y_i,i}) = (-1)^{k} cos(\theta_{y_{i},i}) -2k,
+    \Psi(\theta_{y_i,i}) = (-1)^{k} \cos(\theta_{y_{i},i}) -2k,
 \end{equation}
 where $k \in \left[ 0, m-1 \right]$.
 Parameter $m \geq 1$ gives us the control over the angular margin size.
