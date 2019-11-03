@@ -50,3 +50,20 @@ The advantage of \textit{ArcFace} is its constant linear angular margin througho
     \caption{Decision margins of different loss functions under binary classification case.~\cite{ArcFace}}
     \label{fig:arcfacecomp}
 \end{figure}
+
+We can see the concrete results in table~\ref{tbl:arcfacecomp}.
+ResNet100 with ArcFace loss trained on MS1MV2~\ref{subsec:ms1m} dataset exceeded the results of methods mentioned in
+this thesis.
+
+\begin{table}[H]
+    \begin{tabularx}{\textwidth}{l|XXc}
+        Method                & \#Image & LFW~\ref{subsec:lfw}            & YTF~\ref{subsec:ytf}            \\ \hline
+        FaceNet~\ref{subsubsec:facenet}               & 200M    & 99.63          & 95.10          \\
+        Center Loss~\ref{subsubsec:center-loss}           & 0.7M    & 99.28          & 94.90          \\
+        SphereFace~\ref{subsubsec:sphereface-loss}            & 0.5M    & 99.42          & 95.00          \\
+        CosFace~\ref{subsubsec:cosface}               & 5M      & 99.73          & 97.60          \\
+        MS1MV2, R100, ArcFace & 5.8M    & \textbf{99.83} & \textbf{98.02}
+    \end{tabularx}
+    \caption{Verification performance (\%) of different methods on LFW and YTF datasets.}
+    \label{tbl:arcfacecomp}
+\end{table}

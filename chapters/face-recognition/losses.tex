@@ -57,7 +57,7 @@ The drawbacks of \textit{triplet loss} are the demands entailed by the construct
 The number of those is subject to combinatorial explosion and inevitably results in slow convergence and instability
 This is a serious issue especially for large datasets.
 
-\subsubsection{Center Loss}
+\subsubsection{Center Loss}\label{subsubsec:center-loss}
 The main objective of the research~\cite{CenterLoss} was to design a loss function which solves the main drawbacks of
 \textit{sofmax loss}~\ref{subsubsec:softmax-loss} and \textit{triplet loss}~\ref{subsubsec:triplet-loss}.
 
@@ -111,7 +111,7 @@ As is to be expected, higher values of the parameter result in more compact clus
     \label{fig:centerlosslambda}
 \end{figure}
 
-\subsubsection{Congenerous Cosine Loss}
+\subsubsection{Congenerous Cosine Loss}\label{subsubsec:coco-loss}
 Congenerous Cosine Loss~\cite{CocoLoss} (known as COCO loss) is a loss function which was published in 2017.
 
 To define the loss we first have to clarify how the centroid of class \textit{k} is computed.
@@ -136,7 +136,7 @@ Now we can move on to the final COCO loss function definition:
     - \sum_{i \in \beta} \log \left( p_{l_i}^{(i)} \right).
 \end{equation}
 
-\subsubsection{SphereFace Loss}
+\subsubsection{SphereFace Loss}\label{subsubsec:sphereface-loss}
 SphereFace~\cite{SphereFace} is a loss function which was published in 2018.
 The research significantly distinguishes itself from the previously mentioned losses by not relying on euclidean margin.
 SphereFace uses angular margin instead.
@@ -185,6 +185,7 @@ The angle function has the following definition:
 where $k \in \left[ 0, m-1 \right]$.
 Parameter $m \geq 1$ gives us the control over the angular margin size.
 
+\subsubsection{CosFace Loss}\label{subsubsec:cosface}
 
 \subsubsection{ArcFace Loss}\label{subsubsec:arcface}
 ArcFace loss is used in this thesis which makes it the topic of the following chapter~\ref{ch:arcface}.
