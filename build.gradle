@@ -1,4 +1,4 @@
-version = "0.2.0"
+version = "0.3.0"
 
 def mainFile = "thesis"
 
@@ -37,7 +37,7 @@ task cleanLatex() {
 task export() {
     doLast {
         exec {
-            commandLine "cp ${mainFile}.pdf /home/honza/Downloads/thesis_${version}.pdf".split()
+            commandLine "cp ${mainFile}.pdf /home/honza/Downloads/thesis_benes_${version}.pdf".split()
         }
     }
 }
