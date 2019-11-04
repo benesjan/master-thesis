@@ -160,6 +160,7 @@ The meanings of the remaining symbols are equal to those in the softmax equation
 
 Next we normalize $\norm{W_j} = 1, \forall j$ and set the bias term to 0.
 \begin{equation}
+    \label{eq:softmaxmod}
     \mathcal{L}_{modified} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{\norm{x_i} \cos(\theta_{y_i,i})}}
     {\sum_{j-1}^{n} e^{\norm{x_{i}} \cos(\theta_{j,i})}}
 \end{equation}
@@ -171,6 +172,13 @@ To improve the discriminative power angular margin was incorporated:
     {e^{\norm{x_i} \cos(m\theta_{y_i,i})} + \sum_{j \neq y_i} e^{\norm{x_{i}} \cos(\theta_{j,i})}},
 \end{equation}
 where $\theta_{y_i,i}$ lies in $\left[ 0, \frac{\pi}{m} \right]$.
+
+The decision boundary for a binary case is defined by:
+\begin{equation}
+    \label{eq:spherebound}
+    \cos{m\theta_1} = \cos{\theta_2},
+\end{equation}
+where $\theta_i$ is the angle between the feature and weight of class $i$.
 
 To make the loss~\ref{eq:ang} optimizable for CNNs the definition range of $\cos(\theta_{y_i},i)$ is expanded.
 This is achieved by replacing the cosine term with monotonically decreasing angle function $\Psi(\theta_{y_i},i)$
@@ -186,6 +194,45 @@ where $k \in \left[ 0, m-1 \right]$.
 Parameter $m \geq 1$ gives us the control over the angular margin size.
 
 \subsubsection{CosFace Loss}\label{subsubsec:cosface}
+CosFace~\cite{CosFace} is another loss using margin to achieve better discriminative power than
+softmax~\ref{subsubsec:softmax-loss}.
+
+The decision boundary for binary case is defined by the following equation:
+\begin{equation}
+    \label{eq:cosbounary}
+    \cos{\theta_1} - m = \cos{\theta_2},
+\end{equation}
+where the symbols have exactly the same meaning as in the equation~\ref{eq:spherebound} of SphereFace decision boundary.
+The advantage of CosFace over SphereFace is the ease of optimization.
+The reason for that is that the decision boundary of CosFace is not being defined over the angular space.
+Optimization in angular space is more difficult because of the non-monotonicity of the cosine function.
+
+Another innovation over SphereFace is that not only is the weight vector $W_j$ normalized, but the feature vectors
+$x_i$ as well.
+This achieves much lower intra-class variability by concentrating more on the angle during training.
+By fixing $\norm{x}$ as some predetermined radius $s$ in equation~\ref{eq:softmaxmod} we get:
+\begin{equation}
+    \mathcal{L}_{ns} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{s \cos(\theta_{y_i,i})}}
+    {\sum_{j-1}^{n} e^{s \cos(\theta_{j,i})}}
+\end{equation}
+This loss is called Normalized Softmax Loss (NSL) in the CosFace research paper.
+NSL emphasizes correct classification but is not discriminative enough for face recognition tasks.
+For this reason (as was mentioned in the SphereFace research as well) the margin is incorporated:
+\begin{equation}
+    \label{eq:cosface}
+    \mathcal{L}_{lmc} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{s \left( \cos(\theta_{y_i,i}) - m \right)}}
+    {e^{s\ \left( \cos(\theta_{y_i,i}) - m \right)} + \sum_{j \neq y_i}^n e^{s\ \cos(\theta_{j,i})}},
+\end{equation}
+subject to
+\begin{align}
+    W &= \frac{W*}{\norm{W*}}, \\
+    x &= \frac{x*}{\norm{x*}}, \\
+    \cos(\theta_j, i) &= W_{j}^T x_i.
+\end{align}
+The meaning of the equation constituents is equivalent to those in the previous sections.
+
+The equation~\ref{eq:cosface} is the final form of the CosFace loss.
+The authors of the research call it the Large Margin Cosine Loss (LMCL).
 
 \subsubsection{ArcFace Loss}\label{subsubsec:arcface}
 ArcFace loss is used in this thesis which makes it the topic of the following chapter~\ref{ch:arcface}.
