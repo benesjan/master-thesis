@@ -35,11 +35,8 @@ commentstyle=\it\footnotesize\color{Gray}
 
 \newcommand\norm[1]{\left\lVert#1\right\rVert}
 
-\theoremstyle{definition}
-\newtheorem{defn}{Definition}[section]
-
-\DeclareMathOperator*{\argmax}{arg\,max}
-\DeclareMathOperator*{\argmin}{arg\,min}
+% Centered X column in tabularx environment
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
 
 \begin{document}
     \pagenumbering{gobble}

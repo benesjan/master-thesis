@@ -1,8 +1,16 @@
 \chapter{ArcFace}\label{ch:arcface}
 ArcFace~\cite{ArcFace} is a research which became public in 2018 and achieved state-of-the-art results on LFW dataset.
 
-ArcLoss is based on the equation of \textit{softmax loss}~\ref{eq:softmax}.
-There are few steps separating the original and the improved version:
+This chapter is relatively short because most of the ideas leading to ArcFace were already applied in the preceding
+research like SphereFace~\ref{subsubsec:sphereface-loss} and CosFace~\ref{subsubsec:cosface}.
+To name these ideas they are normalization of class weight and feature vector and incorporation of margin in the loss
+function equation.
+These two ideas improve the intra-class variance in angular space resulting in a model with better discriminative
+abilities in the area of facial recognition tasks.
+
+Like SphereFace and CosFace, ArcFace originates in the equation of \textit{softmax loss}~\ref{eq:softmax} as well.
+There are five steps separating the original and the improved version.
+The first four are equivalent to those in SphereFace:
 \begin{enumerate}
     \item First step is to fix the bias $b_j = 0$.
     \item Then we transform the logit using the dot product definition $W_j^T x_i = \norm{W_j} \norm{x_j} \cos \theta_j$
@@ -28,20 +36,35 @@ At this point the loss function equation is as follows:
 
 \begin{enumerate}
     \setcounter{enumi}{4}
-    \item Now we incorporate the additive margin penalty \textit{m} between $x_i$ and $W_{y_i}$.
-    The angluar margin is equal to the geodesic distance\footnote{Distance of a curve representing shortest path
-    between two points in a surface.} on the hypersphere which is the reason why the method is called
-    \textit{ArcFace}.
+    \item Now we incorporate the additive angular margin penalty \textit{m} between $x_i$ and $W_{y_i}$.
+    The angular margin is equal to the geodesic distance\footnote{Distance of a curve representing shortest path
+    between two points in a surface.} on the hypersphere.
+    This is the reason why the method is called \textit{ArcFace}.
 \end{enumerate}
 
-Final ArcFace loss function:
+Final ArcFace loss function is defined as:
 \begin{equation}
     \mathcal{L} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{s \cos(\theta_{y_i,i} + m)}}
     {e^{s\ \cos(\theta_{y_i,i} + m)} + \sum_{j = 1, j \neq y_i}^n e^{s\ \cos(\theta_{j,i})}}.
 \end{equation}
+It has been experimentally determined that the best performance is achieved for $m=0.5$.
 
-\section{Comparison with SphereFace and CosFace}\label{sec:arc-comparison}
-By having a look at figure~\ref{fig:arcfacecomp} we can do a comparison of geometric differences of decision margins.
+\section{Comparison with Other Losses}\label{sec:arc-comparison}
+By having a look at table~\ref{tbl:arcfaceboundcomp} and figure~\ref{fig:arcfacecomp} we can do a comparison of
+geometric differences of decision margins.
+
+\begin{table}[H]
+    \begin{tabularx}{\textwidth}{l|Y}
+        Loss Functions & Decision Boundaries \\ \hline
+        Softmax~\ref{subsubsec:sphereface-loss} & $\left( W_1 - W_2 \right)x + b_1 - b_2 = 0$ \\
+        SphereFace~\ref{subsubsec:sphereface-loss} & $\norm{x} \left( \cos{m\theta_1} - \cos{\theta_2} \right) = 0$ \\
+        CosFace~\ref{subsubsec:cosface} & $s \left( \cos{\theta_1} - m - \cos{\theta_2} \right) = 0$ \\
+        ArcFace & $s \left( \cos(\theta_1 + m) - \cos{\theta_2} \right) = 0$
+    \end{tabularx}
+    \caption{Comparison of the decision boundaries under the binary classification case}
+    \label{tbl:arcfaceboundcomp}
+\end{table}
+
 The advantage of \textit{ArcFace} is its constant linear angular margin throughout the whole interval.
 
 \begin{figure}[H]
@@ -51,9 +74,9 @@ The advantage of \textit{ArcFace} is its constant linear angular margin througho
     \label{fig:arcfacecomp}
 \end{figure}
 
-We can see the concrete results in table~\ref{tbl:arcfacecomp}.
-ResNet100 with ArcFace loss trained on MS1MV2~\ref{subsec:ms1m} dataset exceeded the results of methods mentioned in
-this thesis.
+We can see the concrete percentual results in table~\ref{tbl:arcfacecomp}.
+ResNet100 with ArcFace loss trained on MS1MV2~\ref{subsec:ms1m} dataset exceeded the results of other methods mentioned
+in this thesis.
 
 \begin{table}[H]
     \begin{tabularx}{\textwidth}{l|XXc}
