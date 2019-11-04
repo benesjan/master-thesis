@@ -14,6 +14,7 @@
 \setstretch{1.5}
 
 \setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{4}
 
 \bibliography{references}
 
@@ -54,18 +55,21 @@ commentstyle=\it\footnotesize\color{Gray}
 
     \input{abstract.tex}
 
-    \setcounter{tocdepth}{4}
     \tableofcontents
 
-    \pagenumbering{arabic}
-
     \input{chapters/introduction.tex}
+
+    \pagenumbering{arabic}
 
     \input{chapters/cnn.tex}
 
     \input{chapters/face-recognition/face-recognition.tex}
 
     \input{chapters/arcface.tex}
+
+    \input{chapters/implementation.tex}
+
+    \input{chapters/conclusion.tex}
 
 %    \setquotestyle{english} % Question marks in place of quotes bug fix
     \printbibliography
