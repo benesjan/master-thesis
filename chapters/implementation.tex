@@ -55,6 +55,15 @@ In this case, the images contain faces in different positions.
 The desired format is visualized in figure~\ref{fig:dataset}.
 
 \subsection{Dataset Description}\label{subsec:dataset-description}
+The input dataset consists of 15 videos and the same amount of annotation files in \textit{json}\footnote{An
+open-standard file format that uses human-readable text to transmit data objects consisting of attribute–value pairs
+and array data types.} format.
+
+In every annotation file there is a dictionary object, where key is a name and value is a list of detections.
+Every detection contains information about frame and the position of the face.
+This information is used to process the dataset to standardized format.
+
+\subsection{Algorithm}\label{subsec:algorithm}
 
 \section{Feature Extraction}\label{sec:feature-extraction}
 
