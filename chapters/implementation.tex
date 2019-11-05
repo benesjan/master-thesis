@@ -87,8 +87,13 @@ The preprocessing algorithm consists of seven steps:
     \item Then I detect all the faces in the frame using MTCNN detector.
     The detector returns coordinates of the bounding boxes\footnote{A rectangle describing face position.} and the
     facial landmarks\footnote{Salient regions of the face.}.
-    \item I select the detection which has the biggest "Intersection over Union (IoU)" with the bounding box from the
-    annotation file.
+    \item I select the detection which meets the following two conditions:
+    \begin{enumerate}
+        \item has the biggest IoU with the bounding box from the annotation file of all the detections;
+        \item the IoU value is at least \textbf{0.5} (This value has been determined experimentally as
+        is described in the section~\ref{subsubsec:detection-mislabelings}.).
+    \end{enumerate}
+    In case these two conditions are not met for any of the detections the frame is omitted.
     \item Now I perform face frontalization using the facial landmarks from the previous steps and the predetermined
     position of target facial landmarks.
     This is achieved by using the least squares method to find an affine transformation\footnote{A function between
@@ -98,6 +103,23 @@ The preprocessing algorithm consists of seven steps:
     \item In the last step I save the transformed image on the path defined by the standardized dataset format
     (\path{dataset/name/image_128x128.jpg}).
 \end{enumerate}
+
+\subsubsection{Detection of Mislabelings}\label{subsubsec:detection-mislabelings}
+As I mentioned in the section~\ref{sec:precision}, precision can be used to detect incorrect labels in the dataset.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/implementation/faulty_prft.eps}
+    \caption{An example of precision curve~\ref{sec:precision} computed on a dataset containing errors.}
+    \label{fig:faulty_prft}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{images/implementation/faulty_detection.jpg}
+    \caption{An example of faulty detection.}
+    \label{fig:faulty_bbox}
+\end{figure}
 
 \section{Feature Extraction}\label{sec:feature-extraction}
 
