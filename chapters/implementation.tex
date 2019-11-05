@@ -61,9 +61,43 @@ and array data types.} format.
 
 In every annotation file there is a dictionary object, where key is a name and value is a list of detections.
 Every detection contains information about frame and the position of the face.
-This information is used to process the dataset to standardized format.
+This information is used to transform the dataset to standardized format.
+The reference face position was selected by human.
+Because of that, the geometry of the area is not always consistent which significantly decreases the model performance.
+For this reason, as is described in the following section~\ref{subsec:algorithm}, this reference position is not
+used directly in the algorithm.
 
 \subsection{Algorithm}\label{subsec:algorithm}
+Before the presentation of the algorithm it is necessary to define "Intersection over Union (IoU)."
+As the name implies IoU is computed as a fraction with intersection area in the numerator and union area in the
+denominator (see figure~\ref{fig:iou}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics{images/implementation/iou.eps}
+    \caption{IoU visualization\cite{IoU}}
+    \label{fig:iou}
+\end{figure}
+
+The preprocessing algorithm consists of seven steps:
+\begin{enumerate}
+    \item First I iterate over the annotation files.
+    \item Then I iterate over the names and detections within the file.
+    \item In the third step I fetch the frame out of the video corresponding to the detection.
+    \item Then I detect all the faces in the frame using MTCNN detector.
+    The detector returns coordinates of the bounding boxes\footnote{A rectangle describing face position.} and the
+    facial landmarks\footnote{Salient regions of the face.}.
+    \item I select the detection which has the biggest "Intersection over Union (IoU)" with the bounding box from the
+    annotation file.
+    \item Now I perform face frontalization using the facial landmarks from the previous steps and the predetermined
+    position of target facial landmarks.
+    This is achieved by using the least squares method to find an affine transformation\footnote{A function between
+    affine spaces which preserves points, straight lines and planes.} between the two sets of coordinates.
+    After the transformation the image geometry is 128x128 and the facial landmarks are in the same position across
+    the whole dataset.
+    \item In the last step I save the transformed image on the path defined by the standardized dataset format
+    (\path{dataset/name/image_128x128.jpg}).
+\end{enumerate}
 
 \section{Feature Extraction}\label{sec:feature-extraction}
 
