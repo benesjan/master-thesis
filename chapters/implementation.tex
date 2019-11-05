@@ -1,4 +1,64 @@
 \chapter{System Design and Implementation}\label{ch:implementation}
+The system pipeline\footnote{See footnote on page~\pageref{foot:pipe}} consists of three separate processes:
+data preprocessing~\ref{sec:data-preprocessing}, feature extraction~\ref{sec:feature-extraction} and
+evaluation~\ref{sec:evaluation}.
+
+The system is implemented in \textit{Python} programming language.
+Libraries \textit{NumPy} and \textit{PyTorch} are being extensively used throughout the whole pipeline.
+
+\section{Data Preprocessing}\label{sec:data-preprocessing}
+\begin{wrapfigure}[7]{r}{0pt}
+    \centering
+    \raisebox{0pt}[\dimexpr\height-0.831\baselineskip\relax]{%
+    \begin{forest}
+        for tree={
+        font=\ttfamily,
+        grow'=0,
+        child anchor=west,
+        parent anchor=south,
+        anchor=west,
+        calign=first,
+        edge path={
+        \noexpand\path [draw, \forestoption{edge}]
+        (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+        },
+        before typesetting nodes={
+        if n=1
+        {insert before={[,phantom]}}
+        {}
+        },
+        fit=band,
+        before computing xy={l=15pt},
+        }
+        [dataset
+        [name1
+        [image1\_128x128.jpg]
+        [image2\_128x128.jpg]
+        [image3\_128x128.jpg]
+        ]
+        [name2
+        [image1\_128x128.jpg]
+        [image2\_128x128.jpg]
+        ]
+        [\ldots]
+        ]
+    \end{forest}
+    }
+    \caption{Standard image dataset format}
+    \label{fig:dataset}
+\end{wrapfigure}
+The goal of preprocessing is to convert the input dataset~\ref{subsec:dataset-description} to a standard format.
+The standardized dataset consists of directories with each directory representing one identity/label.
+In these directories there are images corresponding to the identity.
+In this case, the images contain faces in different positions.
+
+The desired format is visualized in figure~\ref{fig:dataset}.
+
+\subsection{Dataset Description}\label{subsec:dataset-description}
+
+\section{Feature Extraction}\label{sec:feature-extraction}
+
+\section{Evaluation}\label{sec:evaluation}
 
 \begin{figure}[H]
     \centering
