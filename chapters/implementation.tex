@@ -64,10 +64,10 @@ Every detection contains information about frame and the position of the face.
 This information is used to transform the dataset to standardized format.
 The reference face position was selected by human.
 Because of that, the geometry of the area is not always consistent which significantly decreases the model performance.
-For this reason, as is described in the following section~\ref{subsec:algorithm}, this reference position is not
+For this reason, as is described in the following section~\ref{subsec:preproalgo}, this reference position is not
 used directly in the algorithm.
 
-\subsection{Algorithm}\label{subsec:algorithm}
+\subsection{Preprocessing Algorithm}\label{subsec:preproalgo}
 Before the presentation of the algorithm it is necessary to define "Intersection over Union (IoU)."
 As the name implies IoU is computed as a fraction with intersection area in the numerator and union area in the
 denominator (see figure~\ref{fig:iou}).
@@ -104,7 +104,34 @@ The preprocessing algorithm consists of seven steps:
     (\path{dataset/name/image_128x128.jpg}).
 \end{enumerate}
 
+Having the dataset in the desired format we can proceed to the feature extraction.
+
 \section{Feature Extraction}\label{sec:feature-extraction}
+Feature extraction~\cite{FeEx} is a process of dimensionality reduction by which an initial set of raw data
+is reduced to the set of feature vectors.
+In this study this process is carried out by feeding the input image $x_i \in \mathbb{R}^{128\times128 }$ to the CNN model.
+On the output we retrieve a feature vector $y_i \in \mathbb{R}^{1024}$.
+
+The model used is 18 layer ResNet~\ref{subsubsec:resnet} which was trained under a supervision of the ArcFace loss.
+The training process was not carried out as part of this thesis.
+The pretrained model was downloaded from the ArcFace implementation repository~\cite{ArcFacePyTorch}.
+
+\subsection{Feature Extraction Algorithm}\label{subsec:feexalgo}
+The feature extraction algorithm consists of 6 steps:
+\begin{enumerate}
+    \item Initially I will iterate over the images in the dataset.
+    \item In the second step I save the image and the flipped version into an array
+    with shape $2\times1\times128\times128$.
+    \item With this shape, the array can be put on the inputs of ResNet-18.
+    \item I retrieve the feature vector on the output.
+    \item In the fifth step the vector along with the corresponding label is saved into an array.
+    \item Once all the feature vectors are computed, the resulting array is saved using \textit{h5py} module.
+\end{enumerate}
+
+In the final array there are 478529 feature vectors.
+The whole file is approximately 2GB in size.
+
+With having feature vectors computed we can carry out evaluation~\ref{sec:evaluation}.
 
 \section{Evaluation}\label{sec:evaluation}
 
