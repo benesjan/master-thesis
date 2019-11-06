@@ -160,9 +160,50 @@ This approach made the use of optimized matrix libraries possible while reducing
 
 There are 5 steps in the parallelized algorithm:
 \begin{enumerate}
-    \item
+    \item Initially I generate all the interval pairs.
+    \item In the second step I pass the intervals as an argument to the generator function.
+    This function returns pairs of slices of the feature vector array and corresponding labels.
+    \item Next I pass the generator function as an argument to the \textit{imap} method from \textit{multiprocessing}
+    module.
+    This method iterates over the generator function and passes the retrieved values to separate processes.
+    With this step, parallelized processing is achieved.
+    \item In the fourth step the matrix of cosine distances is computed between the two feature vector arrays
+    and two label arrays using \textit{cosine\_distances} method from \textit{sklearn} library.
+    Computing the matrix for labels allows for simple and efficient comparison of predictions and reference
+    values using matrix operations.
+    \item Next I convert the matrices to two long vectors.
+    \item Now I iterate over the list of threshold values ($\left[ 0, 0.05, 0.10, 0.15, \ldots 2 \right]$).
+    \item I apply the threshold to the distances.
+    This way I retrieve a vector of binary values.
+    \item I use the methods \textit{sum} and \textit{logical\_and} along with elementwise binary value inversion to
+    count the number of \textit{true positives (TP)}, \textit{true negatives (TN)}, \textit{false positives (FP)} and
+    \textit{false negatives (FN)}.
+    \item In the last step I do elementwise summation of the arrays which were returned from the processes.
 \end{enumerate}
 
+The output of the algorithm is an array with 200 rows and 4 columns.
+The rows correspond to the threshold values; columns to \textit{TP}, \textit{TN}, \textit{FP} and \textit{FN}.
+
+Having all these values accumulated we can proceed with computation of all the relevant metrics.
+
+\subsection{ArcFace Performance}\label{subsec:arcface-performance}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\columnwidth]{images/implementation/prft_fav-128_N1.eps}
+\caption{Progression of precision, recall and $F_1$ score with increasing threshold values.}
+\label{fig:prft}
+\end{figure}
+
+\subsubsection{Comparison with Commercial System}\label{subsubsec:comparison-with-commercial-system}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\columnwidth]{images/implementation/prft_eyedea.eps}
+\caption{Progression of precision, recall and $F_1$ score with increasing threshold values.
+The curves were computed on the outputs of commercial system developed by Eyedea Recognition s. r. o.}
+\label{fig:prft_eyedea}
+\end{figure}
 
 \subsection{Detection of Mislabelings}\label{subsec:detection-mislabelings}
 As I mentioned in the section~\ref{sec:precision}, precision curve can be used to detect incorrect labels in the
@@ -194,20 +235,3 @@ Because of the white stripe, the man in the foreground was not detected by the M
 on the right instead.
 This led to an error in the dataset and it is the reason why the IoU threshold was put in place during the data
 preprocessing~\ref{sec:data-preprocessing}.
-
-\subsection{Comparison with Commercial System}\label{subsec:comparison-with-commercial-system}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics{images/implementation/prft_eyedea.eps}
-    \caption{Progression of precision, recall and $F_1$ score with increasing thresholds values of the commercial
-    system made bu Eyedea Recognition s. r. o.}
-    \label{fig:prft_eyedea}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics{images/implementation/prft_fav-128_N1.eps}
-    \caption{Progression of precision, recall and $F_1$ score with increasing thresholds values}
-    \label{fig:prft}
-\end{figure}
