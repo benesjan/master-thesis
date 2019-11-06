@@ -104,7 +104,7 @@ The preprocessing algorithm consists of seven steps:
     (\path{dataset/name/image_128x128.jpg}).
 \end{enumerate}
 
-Having the dataset in the desired format we can proceed to the feature extraction.
+Having the dataset in the desired format we can proceed with feature extraction.
 
 \section{Feature Extraction}\label{sec:feature-extraction}
 Feature extraction~\cite{FeEx} is a process of dimensionality reduction by which an initial set of raw data
@@ -129,11 +129,40 @@ The feature extraction algorithm consists of 6 steps:
 \end{enumerate}
 
 In the final array there are 478529 feature vectors.
-The whole file is approximately 2GB in size.
+The whole file is approximately 2 GB in size.
 
-With having feature vectors computed we can carry out evaluation~\ref{sec:evaluation}.
+Having the feature vectors computed we can carry out evaluation~\ref{sec:evaluation}.
 
 \section{Evaluation}\label{sec:evaluation}
+The system's performance is evaluated on the verification task.
+To describe the algorithm in simple words, the task consists of computing cosine distance between every two feature
+vectors and deciding, given some threshold, whether the vectors correspond to the same identity ot not.
+This computation is carried out for all the threshold values in the specified interval.
+
+The algorithm is described in depth in the following section~\ref{subsec:thresholding-algorithm}.
+
+\subsection{Thresholding Algorithm}\label{subsec:thresholding-algorithm}
+First I would like to analyze the algorithm time complexity and memory demands.
+
+As I previously mentioned, it is necessary to compute the distances between every two feature vectors in the dataset.
+The number of vector pairs is equal to
+\begin{equation}
+    N_{pairs} = \frac{n\left(n+1\right)}{2} = \frac{478529\left(478529+1\right)}{2} \approx 114.50 \cdot 10^9,
+\end{equation}
+where $n = 478529$ is the number of vectors in the dataset.
+If we computed all the distances at once using optimized matrix operations we would need at least 460 GB of RAM memory.
+
+Given that the algorithm time complexity is $O(n^2)$ and the big memory demands it was desirable to split the distance
+matrix into smaller sub-matrices.
+These sub-matrices than could be submitted to different CPU cores to process which significantly reduced the computation
+time.
+This approach made the use of optimized matrix libraries possible while reducing the excessive memory demands.
+
+There are 5 steps in the parallelized algorithm:
+\begin{enumerate}
+    \item
+\end{enumerate}
+
 
 \subsection{Detection of Mislabelings}\label{subsec:detection-mislabelings}
 As I mentioned in the section~\ref{sec:precision}, precision curve can be used to detect incorrect labels in the
