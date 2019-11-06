@@ -91,7 +91,7 @@ The preprocessing algorithm consists of seven steps:
     \begin{enumerate}
         \item has the biggest IoU with the bounding box from the annotation file of all the detections;
         \item the IoU value is at least \textbf{0.5} (This value has been determined experimentally as
-        is described in the section~\ref{subsubsec:detection-mislabelings}.).
+        is described in the section~\ref{subsec:detection-mislabelings}.).
     \end{enumerate}
     In case these two conditions are not met for any of the detections the frame is omitted.
     \item Now I perform face frontalization using the facial landmarks from the previous steps and the predetermined
@@ -104,8 +104,14 @@ The preprocessing algorithm consists of seven steps:
     (\path{dataset/name/image_128x128.jpg}).
 \end{enumerate}
 
-\subsubsection{Detection of Mislabelings}\label{subsubsec:detection-mislabelings}
-As I mentioned in the section~\ref{sec:precision}, precision can be used to detect incorrect labels in the dataset.
+\section{Feature Extraction}\label{sec:feature-extraction}
+
+\section{Evaluation}\label{sec:evaluation}
+
+\subsection{Detection of Mislabelings}\label{subsec:detection-mislabelings}
+As I mentioned in the section~\ref{sec:precision}, precision curve can be used to detect incorrect labels in the
+dataset.
+In figure~\ref{fig:faulty_prft} there are three functions dependent on threshold.
 
 \begin{figure}[H]
     \centering
@@ -114,16 +120,26 @@ As I mentioned in the section~\ref{sec:precision}, precision can be used to dete
     \label{fig:faulty_prft}
 \end{figure}
 
+By the definition of precision ($Precision = \frac{TP}{TP+FP}$), there should not be any false positives
+for threshold 0 because in such a setting, the system is strongly biased towards false negatives.
+With this in mind, value of precision which is not equal to 1 for threshold 0 is a sign that there are either
+mislabelings in the dataset or that the whole model is faulty.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\columnwidth]{images/implementation/faulty_detection.jpg}
-    \caption{An example of faulty detection.}
+    \caption{An example of a faulty detection.}
     \label{fig:faulty_bbox}
 \end{figure}
 
-\section{Feature Extraction}\label{sec:feature-extraction}
+This idea was used extensively during the experimentation.
+Figure~\ref{fig:faulty_bbox} is an example of faulty face detection.
+Because of the white stripe, the man in the foreground was not detected by the MTCNN detector selecting the bald man
+on the right instead.
+This led to an error in the dataset and it is the reason why the IoU threshold was put in place during the data
+preprocessing~\ref{sec:data-preprocessing}.
 
-\section{Evaluation}\label{sec:evaluation}
+\subsection{Comparison with Commercial System}\label{subsec:comparison-with-commercial-system}
 
 \begin{figure}[H]
     \centering
