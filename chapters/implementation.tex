@@ -186,23 +186,28 @@ The rows correspond to the threshold values; columns to \textit{TP}, \textit{TN}
 
 Having all these values accumulated we can proceed with computation of all the relevant metrics.
 
-\subsection{ArcFace Performance}\label{subsec:arcface-performance}
+\subsection{Performance Comparison}\label{subsec:performance-comparison}
+In order to evaluate the performance I implemented an algorithm which computes precision~\ref{sec:precision},
+recall~\ref{sec:recall} and $F_1$ score~\ref{sec:f-score} on the data from previous section.
+
+In figure~\ref{fig:prft} we can see the progression of these metrics.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.9\columnwidth]{images/implementation/prft_fav-128_N1.eps}
-\caption{Progression of precision, recall and $F_1$ score with increasing threshold values.}
-\label{fig:prft}
-\end{figure}
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=0.95\columnwidth]{images/implementation/prft_fav-128_N1.eps}
+        \caption{ResNet-18 trained under a supervision of ArcFace loss function}
+        \label{fig:prft_arcface}
+    \end{subfigure}%
 
-\subsubsection{Comparison with Commercial System}\label{subsubsec:comparison-with-commercial-system}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.9\columnwidth]{images/implementation/prft_eyedea.eps}
-\caption{Progression of precision, recall and $F_1$ score with increasing threshold values.
-The curves were computed on the outputs of commercial system developed by Eyedea Recognition s. r. o.}
-\label{fig:prft_eyedea}
+    \begin{subfigure}{\textwidth}
+        \centering
+        \includegraphics[width=0.95\columnwidth]{images/implementation/prft_eyedea.eps}
+        \caption{Commercial system developed by Eyedea Recognition s. r. o.}
+        \label{fig:prft_eyedea}
+    \end{subfigure}
+    \caption{Progression of precision, recall and $F_1$ score with increasing threshold values.}
+    \label{fig:prft}
 \end{figure}
 
 \subsection{Detection of Mislabelings}\label{subsec:detection-mislabelings}
@@ -212,7 +217,7 @@ In figure~\ref{fig:faulty_prft} there are three functions dependent on threshold
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\columnwidth]{images/implementation/faulty_prft.eps}
+    \includegraphics[width=0.95\columnwidth]{images/implementation/faulty_prft.eps}
     \caption{An example of precision curve~\ref{sec:precision} computed on a dataset containing errors.}
     \label{fig:faulty_prft}
 \end{figure}
