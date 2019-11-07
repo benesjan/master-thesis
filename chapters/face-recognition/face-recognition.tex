@@ -17,7 +17,8 @@ As I mentioned in the definition, there are two main subtasks~\cite{FaceRec}:
 Facial recognition pipeline\footnote{\label{foot:pipe}A chain of processing elements, arranged so that the output of
 each element is the input of the next.} usually has the following four steps:
 \begin{enumerate}
-    \item The first on is \textbf{face detection} and it deals with determination of face location within the image.
+    \item The first one is \textbf{face detection}.
+    As the name implies it deals with determination of face location within the image.
     The output of the algorithm is usually face coordinates and facial landmarks.
     Landmarks are a set of coordinates marking important points of the face (eyebrows, nose, mouth, \ldots).
     The knowledge of these points is a necessity for the following step.
@@ -32,6 +33,8 @@ each element is the input of the next.} usually has the following four steps:
     The identity associated with the feature vector which has the smallest distance from the extracted one is
     considered to be the identity of the person in the image.
 \end{enumerate}
+
+It is important to note that the second step is not always present and it is deemed unnecessary by some~\cite{FaceNet}.
 
 \section{Datasets}\label{sec:datasets}
 In this section I will briefly describe datasets used for training and evaluation of facial recognition models.
