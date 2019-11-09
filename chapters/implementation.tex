@@ -85,7 +85,7 @@ The preprocessing algorithm consists of seven steps:
     \item Then I iterate over the names and detections within the file.
     \item In the third step I fetch the frame out of the video corresponding to the detection.
     \item Then I detect all the faces in the frame using MTCNN detector.
-    The detector returns coordinates of the bounding boxes\footnote{A rectangle describing face position.} and the
+    The detector returns coordinates of the bounding boxes\footnote{See footnote on page~\pageref{foot:bbox}} and the
     facial landmarks\footnote{Salient regions of the face.}.
     \item I select the detection which meets the following two conditions:
     \begin{enumerate}

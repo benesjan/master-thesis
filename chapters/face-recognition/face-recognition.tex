@@ -22,6 +22,7 @@ each element is the input of the next.} usually has the following four steps:
     The output of the algorithm is usually face coordinates and facial landmarks.
     Landmarks are a set of coordinates marking important points of the face (eyebrows, nose, mouth, \ldots).
     The knowledge of these points is a necessity for the following step.
+    An example of face detection system is described in section~\ref{sec:face-detection}.
     \item \textbf{Face alignment} is a task of changing the face position in such a way that it resembles the position
     of faces on which the feature extraction model was trained.
     In most of the instances this step improves the accuracy.
@@ -66,5 +67,7 @@ For this reason there are different versions available on the Internet containin
 As the name implies the dataset contains images of celebrities.
 In this context celebrity is assumed to be anyone with frequent online presence.
 This became a controversial issue and as a result Microsoft pulled the dataset off the internet.
+
+\include{chapters/face-recognition/face-detection}
 
 \include{chapters/face-recognition/systems}
