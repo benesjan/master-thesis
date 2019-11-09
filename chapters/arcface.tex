@@ -2,7 +2,7 @@
 ArcFace~\cite{ArcFace} is a research which became public in 2018 and achieved state-of-the-art results on LFW dataset.
 
 This chapter is relatively short because most of the ideas leading to ArcFace were already applied in the preceding
-research like SphereFace~\ref{subsubsec:sphereface-loss} and CosFace~\ref{subsubsec:cosface}.
+research like SphereFace~\ref{sec:sphereface-loss} and CosFace~\ref{sec:cosface}.
 To name these ideas they are normalization of class weight and feature vector and incorporation of margin in the loss
 function equation.
 These two ideas improve the intra-class variance in angular space resulting in a model with better discriminative
@@ -56,9 +56,9 @@ geometric differences of decision margins.
 \begin{table}[H]
     \begin{tabularx}{\textwidth}{l|Y}
         Loss Functions & Decision Boundaries \\ \hline
-        Softmax~\ref{subsubsec:sphereface-loss} & $\left( W_1 - W_2 \right)x + b_1 - b_2 = 0$ \\
-        SphereFace~\ref{subsubsec:sphereface-loss} & $\norm{x} \left( \cos{m\theta_1} - \cos{\theta_2} \right) = 0$ \\
-        CosFace~\ref{subsubsec:cosface} & $s \left( \cos{\theta_1} - m - \cos{\theta_2} \right) = 0$ \\
+        Softmax~\ref{sec:sphereface-loss} & $\left( W_1 - W_2 \right)x + b_1 - b_2 = 0$ \\
+        SphereFace~\ref{sec:sphereface-loss} & $\norm{x} \left( \cos{m\theta_1} - \cos{\theta_2} \right) = 0$ \\
+        CosFace~\ref{sec:cosface} & $s \left( \cos{\theta_1} - m - \cos{\theta_2} \right) = 0$ \\
         ArcFace & $s \left( \cos(\theta_1 + m) - \cos{\theta_2} \right) = 0$
     \end{tabularx}
     \caption{Comparison of the decision boundaries under the binary classification case}
@@ -81,10 +81,10 @@ in this thesis.
 \begin{table}[H]
     \begin{tabularx}{\textwidth}{l|XXc}
         Method                & \#Image & LFW~\ref{subsec:lfw}            & YTF~\ref{subsec:ytf}            \\ \hline
-        FaceNet~\ref{subsubsec:facenet}               & 200M    & 99.63          & 95.10          \\
-        Center Loss~\ref{subsubsec:center-loss}           & 0.7M    & 99.28          & 94.90          \\
-        SphereFace~\ref{subsubsec:sphereface-loss}            & 0.5M    & 99.42          & 95.00          \\
-        CosFace~\ref{subsubsec:cosface}               & 5M      & 99.73          & 97.60          \\
+        FaceNet~\ref{subsec:facenet}               & 200M    & 99.63          & 95.10          \\
+        Center Loss~\ref{sec:center-loss}           & 0.7M    & 99.28          & 94.90          \\
+        SphereFace~\ref{sec:sphereface-loss}            & 0.5M    & 99.42          & 95.00          \\
+        CosFace~\ref{sec:cosface}               & 5M      & 99.73          & 97.60          \\
         MS1MV2~\ref{subsec:ms1m}, R100, ArcFace & 5.8M    & \textbf{99.83} & \textbf{98.02}
     \end{tabularx}
     \caption{Verification performance (\%) of different methods on LFW and YTF datasets.}

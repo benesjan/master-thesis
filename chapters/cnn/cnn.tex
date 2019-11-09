@@ -1,7 +1,12 @@
 \chapter{Convolutional Neural Networks}\label{ch:cnn}
 Convolutional Neural Network (CNN) is a class of Artificial Neural Networks\footnote{A computational model inspired by
 animal brain.}, which allows for efficient training on high dimensional data.
-This is especially useful in the field of computer vision as image data is fundamentally high dimensional.
+This is especially useful in the field of \textit{computer vision}\footnote{Scientific field dealing with extraction
+of high level understanding from imagery using computers.} as image data is fundamentally high dimensional.
+
+This theses is dealing with a subset of computer vision called \textit{face recognition}\ref{ch:face-rec} in which CNNs
+achieve state-of-the-art results.
+For this reason, this chapter is present in the text.
 
 Typical architecture of CNNs contains many layers.
 Because of that, these models belong the class of machine learning methods called
@@ -100,7 +105,7 @@ more robust to local translations\cite{DeepFace}.
 \subsection{Locally Connected}\label{subsec:lclayer}
 Locally connected layer is similar to convolutional layer but the difference is that every location in the feature map
 learns different set of filters.
-This layer type is for example used by the DeepFace system~\ref{subsubsec:deepface}.
+This layer type is for example used by the DeepFace system~\ref{subsec:deepface}.
 
 \subsection{ReLU}\label{subsec:relu}
 
@@ -114,14 +119,14 @@ Rectified linear unit (ReLU) layer applies the following~\ref{eq:relu} activatio
 function of a node defines the output of that node given an input or set of inputs.} to the output of layer.
 In CNNs the layer is usually positioned at the output of convolutional layer~\ref{subsec:convolutional}.
 
-\begin{equation}\label{eq:relu}
+\begin{equation}
+    \label{eq:relu}
     ReLU(x) = max(0,x)
 \end{equation}
 
 The advantage of ReLU is its efficacy during training and reduced likelihood of vanishing
 gradient\footnote{\label{foot:vangrad}A situation where a deep neural network is unable to propagate useful gradient
 information from the output end of the model back to the layers near the input end of the model.}.
-
 
 \section{Padding}\label{sec:padding}
 To avoid loss of information at the edges of the image we usually use a method called \textit{padding}.
@@ -131,10 +136,4 @@ The most common ones are \textit{zero padding} and \textit{reflective padding}.
 The first mentioned type, as the name implies, sets the new pixels to zero.
 The second one is more sophisticated and consists in mirroring of the neighboring pixels.
 
-\section{Use Cases}\label{sec:use-cases}
-As I mentioned at the beginning of the chapter, CNNs are mainly used in the field of
-\textit{computer vision}\footnote{Scientific field dealing with extraction of high level understanding from imagery
-using computers.}.
-This theses is dealing with a subset of computer vision called \textit{face recognition}\ref{ch:face-rec} in which CNNs
-achieve state of the art results.
-For this reason, this chapter is present in the text.
+\include{chapters/cnn/models}

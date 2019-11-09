@@ -14,9 +14,6 @@
 
 \setstretch{1.5}
 
-\setcounter{secnumdepth}{3}
-\setcounter{tocdepth}{4}
-
 \bibliography{references}
 
 \definecolor{keywords}{rgb}{0,0,0.7}
@@ -63,9 +60,11 @@ commentstyle=\it\footnotesize\color{Gray}
 %    Page numbering specified in the following file to avoid counting from the table of contents
     \input{chapters/introduction.tex}
 
-    \input{chapters/cnn.tex}
+    \input{chapters/cnn/cnn.tex}
 
     \input{chapters/face-recognition/face-recognition.tex}
+
+    \input{chapters/losses.tex}
 
     \input{chapters/arcface.tex}
 

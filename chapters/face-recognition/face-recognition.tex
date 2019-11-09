@@ -27,7 +27,7 @@ each element is the input of the next.} usually has the following four steps:
     In most of the instances this step improves the accuracy.
     \item \textbf{Feature extraction} is a process of computing a feature vector\footnote{A feature vector is a vector
     that contains information describing an object's important characteristics.} of the face.
-    Architecture of models used for feature extraction is described in section~\ref{sec:mod-methods}.
+    Architecture of models used for feature extraction was described in the previous chapter~\ref{ch:cnn}.
     \item \textbf{Feature matching} uses feature vector from the previous task to identify the person in the image.
     The algorithm uses a database of pre-computed feature vectors and compares them to the newly extracted one.
     The identity associated with the feature vector which has the smallest distance from the extracted one is
@@ -67,19 +67,4 @@ As the name implies the dataset contains images of celebrities.
 In this context celebrity is assumed to be anyone with frequent online presence.
 This became a controversial issue and as a result Microsoft pulled the dataset off the internet.
 
-\section{Overview of Modern Methods}\label{sec:mod-methods}
-In this section I am about to provide an overview of modern methods/models used for facial recognition.
-Models based on CNN architecture~\ref{ch:cnn} achieve state-of-the-art results which is the reason why CNNs dominate the
-field of facial recognition and the field of computer vision as a whole now.
-
-Innovations made in the field of computer vision are usually applicable to the subfield of facial recognition as well.
-This is manifested in usage of the same model architectures (ResNet~\ref{subsubsec:resnet},
-InceptionNet~\ref{subsubsec:inceptionnet}, \ldots) in general image classification as well as in facial recognition.
-On the other hand there is a lot of innovation going on in the design of loss functions which work especially well
-when used for model training\footnote{Machine learning task of learning a function that maps an input to an output
-based on example input-output pairs.} in facial recognition tasks.
-This is the reason why this section is divided in two parts: \textit{models}~\ref{subsec:models} and
-\textit{loss functions}~\ref{subsec:loss-functions}.
-
-\include{chapters/face-recognition/models}
-\include{chapters/face-recognition/losses}
+\include{chapters/face-recognition/systems}

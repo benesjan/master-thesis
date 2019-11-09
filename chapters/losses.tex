@@ -1,10 +1,13 @@
-\subsection{Loss Functions}\label{subsec:loss-functions}
-The main objective of research of loss function is to design a function which leads to a model with superior
+\chapter{Loss Functions}\label{ch:loss-functions}
+The main objective of the research of loss functions is to design a function which leads to a model with superior
 discriminative abilities.
-How well the model discriminates can be measured by the compactness of clusters and the distance between them.
+How well the model discriminates can be measured by the compactness of clusters (intra class variance) and the
+distance between them (inter class variance).
 The goal is for the clusters to be as compact as possible while maximizing the distance in-between them.
 
-\subsubsection{Softmax Loss}\label{subsubsec:softmax-loss}
+This chapter focuses on research of loss functions used in facial recognition tasks.
+
+\section{Softmax Loss}\label{sec:softmax-loss}
 Softmax~\cite{ArcFace} is the most widely used loss function in general classification tasks and its definition is as
 follows:
 \begin{equation}
@@ -26,7 +29,7 @@ The second issue is that the dimension of the output weight matrix grows linearl
 training set.
 This is impractical for large scale deployment.
 
-\subsubsection{Triplet Loss}\label{subsubsec:triplet-loss}
+\section{Triplet Loss}\label{sec:triplet-loss}
 Triplet loss~\cite{TripletLoss} is a loss function which can be optimized by minimizing the distance between
 \textit{anchor} and \textit{positive} point while maximizing the distance between \textit{anchor} and \textit{negative}
 point.
@@ -57,9 +60,9 @@ The drawbacks of \textit{triplet loss} are the demands entailed by the construct
 The number of those is subject to combinatorial explosion and inevitably results in slow convergence and instability
 This is a serious issue especially for large datasets.
 
-\subsubsection{Center Loss}\label{subsubsec:center-loss}
+\section{Center Loss}\label{sec:center-loss}
 The main objective of the research~\cite{CenterLoss} was to design a loss function which solves the main drawbacks of
-\textit{sofmax loss}~\ref{subsubsec:softmax-loss} and \textit{triplet loss}~\ref{subsubsec:triplet-loss}.
+\textit{sofmax loss}~\ref{sec:softmax-loss} and \textit{triplet loss}~\ref{sec:triplet-loss}.
 
 The discriminative power of the learned features is enhanced by incorporation of the distance of features to the
 corresponding class centers.
@@ -111,7 +114,7 @@ As is to be expected, higher values of the parameter result in more compact clus
     \label{fig:centerlosslambda}
 \end{figure}
 
-\subsubsection{Congenerous Cosine Loss}\label{subsubsec:coco-loss}
+\section{Congenerous Cosine Loss}\label{sec:coco-loss}
 Congenerous Cosine Loss~\cite{CocoLoss} (known as COCO loss) is a loss function which was published in 2017.
 
 To define the loss we first have to clarify how the centroid of class \textit{k} is computed.
@@ -136,13 +139,13 @@ Now we can move on to the final COCO loss function definition:
     - \sum_{i \in \beta} \log \left( p_{l_i}^{(i)} \right).
 \end{equation}
 
-\subsubsection{SphereFace Loss}\label{subsubsec:sphereface-loss}
+\section{SphereFace Loss}\label{sec:sphereface-loss}
 SphereFace~\cite{SphereFace} is a loss function which was published in 2018.
 The research significantly distinguishes itself from the previously mentioned losses by not relying on euclidean margin.
 SphereFace uses angular margin instead.
 This has proven to be highly effective in face recognition tasks.
 
-SphereFace loss originates from the softmax loss~\ref{subsubsec:softmax-loss} and its name was inspired by the fact
+SphereFace loss originates from the softmax loss~\ref{sec:softmax-loss} and its name was inspired by the fact
 that the features are projected onto a hypersphere manifold.
 
 To derive SphereFace loss from softmax loss we first incorporate the angle into the softmax equation using the dot
@@ -193,9 +196,9 @@ The angle function has the following definition:
 where $k \in \left[ 0, m-1 \right]$.
 Parameter $m \geq 1$ gives us the control over the angular margin size.
 
-\subsubsection{CosFace Loss}\label{subsubsec:cosface}
+\section{CosFace Loss}\label{sec:cosface}
 CosFace~\cite{CosFace} is another loss using margin to achieve better discriminative power than
-softmax~\ref{subsubsec:softmax-loss}.
+softmax~\ref{sec:softmax-loss}.
 
 The decision boundary for binary case is defined by the following equation:
 \begin{equation}
@@ -234,5 +237,5 @@ The meaning of the equation constituents is equivalent to those in the previous 
 The equation~\ref{eq:cosface} is the final form of the CosFace loss.
 The authors of the research call it the Large Margin Cosine Loss (LMCL).
 
-\subsubsection{ArcFace Loss}\label{subsubsec:arcface}
+\section{ArcFace Loss}\label{sec:arcface}
 ArcFace loss is used in this thesis which makes it the topic of the following chapter~\ref{ch:arcface}.
