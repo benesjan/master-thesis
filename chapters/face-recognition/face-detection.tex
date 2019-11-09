@@ -31,31 +31,60 @@ The first stage is called \textbf{Proposal Network} (P-Net) and its role is to f
 bounding box regression vectors.
 P-Net is fully convolutional neural network.
 
-Before passing the image to P-Net image pyramid is created.
-In other words the original image is resized to many different sizes.
-This gives the model scale invariance.
+Before passing the image to P-Net we resize the image to many different sizes.
+By doing so we make the model scale invariant.
 
-At this point we feed the images to the net.
+Now we feed the images to the net.
 
 The net produces many bounding boxes with varying confidence.
 We parse the output and delete the boxes with low confidence score.
 
 Now we standardize the coordinate system by converting the boxes from resized image to that of unscaled one.
 
-First we run NMS~\ref{subsec:nms} once for every scaled image.
+At this point we run NMS~\ref{subsec:nms} once for every scaled image.
 Then we put all the survivors into one list and run NMS once more.
 
 Before passing the boxes to stage 2 we make the boxes square by elongating the shorter sides.
 
 \subsubsection{Stage 2}
-Candidates from P-Net are fed to another CNN,
-The objective of this net is to filter out a large number of false positives, to perform calibration with bounding
-box regression and to merge
-This stage is called \textbf{Refined Network} (R-Net).
+The name of the second stage CNN is \textbf{Refined Network} (R-Net).
+The objective of this stage is to filter out a large number of false positives and to calibrate the boxes.
+
+Initially we take the boxes from previous stage and copy the pixel values to separate arrays.
+In case the box is out of bounds we fill the "empty space" with zeros.
+
+Now we resize all the arrays to same size of $24 \times 24$ pixels and normalize the pixel values from $<0; 255>$ to
+$<-1; 1>$.
+
+At this point we feed the images to R-Net and collect the outputs.
+
+The outputs are similar to that of P-Net.
+They also include coordinates and confidence levels.
+The coordinates define new and more accurate bounding boxes.
+
+We remove the boxes with lower confidence and perform NMS to remove redundant ones.
+
+Now we standardize the coordinates and reshape the bounding boxes to a square.
+
+\subsubsection{Stage 3}
+We take the boxes from stage 2 and copy the pixel values to new arrays.
+in case the boxes were out of bounds we deal with the issue in the same way as in the previous stage.
+That is we fill the empty space with zeros.
+
+Now we resize the images to be of $48 \times 48$ pixels and feed them into a neural network called
+\textbf{The Output Network} (O-Net).
+
+O-Net is split into three layers at the top and as a result of this architectural choice produces three outputs:
+the coordinates of the bounding box, the coordinates of facial landmarks and the confidence level for each box.
+
+As usual we get rid of the boxes with low confidence score, standardize the coordinates of both the landmarks and the
+boxes and run the boxes through NMS.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\columnwidth]{images/face-recognition/mtcnn.png}
+    \includegraphics[width=0.7\columnwidth]{images/face-recognition/mtcnn.png}
     \caption{MTCNN face detection pipeline~\cite{MTCNN}.}
     \label{fig:mtcnn}
 \end{figure}
+
+Figure~\ref{fig:mtcnn} is a visualization of this three stage process.
