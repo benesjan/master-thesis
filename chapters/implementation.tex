@@ -242,3 +242,15 @@ This led to an error in the dataset and it is the reason why the IoU threshold w
 preprocessing~\ref{sec:data-preprocessing}.
 
 \subsection{Face Detector Evaluation}\label{subsec:detectorevaluation}
+In order to evaluate the detector I've implemented an algorithm which computes recall on the IoU values between the
+MTCNN detection and the area selected by human.
+The process is very similar to the one described in section~\ref{subsec:thresholding-algorithm}.
+
+The output is visualized in the image~\ref{fig:iou}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{images/implementation/mtcnn_recall_fav-128_N1.eps}
+    \caption{Recall computed on IoU~\ref{fig:iou} values.}
+    \label{fig:mtcnn_recall}
+\end{figure}
