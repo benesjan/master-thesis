@@ -119,40 +119,43 @@ As is to be expected, higher values of the parameter result in clusters which ar
 \end{figure}
 
 \section{Congenerous Cosine Loss}\label{sec:coco-loss}
-Congenerous Cosine Loss~\cite{CocoLoss} (known as COCO loss) is a loss function which was published in 2017.
+Congenerous Cosine Loss~\cite{CocoLoss} (known as COCO loss) is a research presenting a loss function which was
+published in 2017.
 
-To define the loss we first have to clarify how the centroid of class \textit{k} is computed.
-The centroid\footnote{Center of cluster.} equation is as follows
+To define the COCO loss we first have to clarify how the centroid of class \textit{k} is computed.
+The centroid\footnote{Center of cluster.} equation is the following:
 \begin{equation}
     \boldsymbol{c}_{k} = \frac{\sum_{i \in \beta} \delta \left( l_i, k \right)\boldsymbol{f}^{(i)}}
     {\sum_{i \in \beta} \delta \left( l_i, k \right) + \epsilon} \in \mathbb{R}^{D \times 1},
 \end{equation}
-where $\beta$ is a mini-batch, $D$ is the feature space dimension, $\delta$ is indicator function, $\epsilon$ is a
+where $\beta$ is a mini-batch, $D$ is the feature space dimension, $\delta$ is an indicator function, $\epsilon$ is a
 trivial number for computation stability, $\boldsymbol{f}^{(i)}$ is the \textit{i}-th feature vector and $l_i$ is
 its label.
 
-Now that we have the centroid equation we can define the term we are trying to maximize during model fitting:
+Having the centroid equation defined we can proceed with a definition of the term we are trying to maximize during
+a model fitting:
 \begin{equation}
     p_{l_i}^{(i)} = \frac{exp C(\boldsymbol{f}^{(i)}, \boldsymbol{c}_{l_{i}})}
     {\sum_{k \neq l} exp C(\boldsymbol{f}^{(i)}, \boldsymbol{c}_{k})} \in \mathbb{R},
 \end{equation}
 where $C$ is standard cosine similarity.
 
-Now we can move on to the final COCO loss function definition:
+Now we can move to the final COCO loss function definition:
 \begin{equation}
     - \sum_{i \in \beta} \log \left( p_{l_i}^{(i)} \right).
 \end{equation}
 
 \section{SphereFace Loss}\label{sec:sphereface-loss}
 SphereFace~\cite{SphereFace} is a loss function which was published in 2018.
-The research significantly distinguishes itself from the previously mentioned losses by not relying on euclidean margin.
+The research significantly distinguishes itself from the previously mentioned losses by not relying on an euclidean
+margin.
 SphereFace uses angular margin instead.
 This has proven to be highly effective in face recognition tasks.
+The name of the loss hints how to features are transformed during the loss computation.
+The features are projected onto a hypersphere manifold.
 
-SphereFace loss originates from the softmax loss~\ref{sec:softmax-loss} and its name was inspired by the fact
-that the features are projected onto a hypersphere manifold.
-
-To derive SphereFace loss from softmax loss we first incorporate the angle into the softmax equation using the dot
+SphereFace originates from the softmax loss~\ref{sec:softmax-loss}.
+To derive SphereFace from softmax we first incorporate the angle into the softmax equation using the dot
 product definition ($a \cdot b = \norm{a} \norm{b} \cos \theta$):
 
 \begin{align*}
@@ -171,8 +174,8 @@ Next we normalize $\norm{W_j} = 1, \forall j$ and set the bias term to 0.
     \mathcal{L}_{modified} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{\norm{x_i} \cos(\theta_{y_i,i})}}
     {\sum_{j-1}^{n} e^{\norm{x_{i}} \cos(\theta_{j,i})}}
 \end{equation}
-While it's possible to learn features with the modified loss the features are not discriminative enough.
-To improve the discriminative power angular margin was incorporated:
+While it's possible to learn features with the modified loss the result would not be discriminative enough.
+To solve this issue the researches incorporated angular margin:
 \begin{equation}
     \label{eq:ang}
     \mathcal{L}_{ang} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{\norm{x_i} \cos(m\theta_{y_i,i})}}
@@ -198,11 +201,10 @@ The angle function has the following definition:
     \Psi(\theta_{y_i,i}) = (-1)^{k} \cos(\theta_{y_{i},i}) -2k,
 \end{equation}
 where $k \in \left[ 0, m-1 \right]$.
-Parameter $m \geq 1$ gives us the control over the angular margin size.
+The parameter $m \geq 1$ gives us control over the angular margin size.
 
 \section{CosFace Loss}\label{sec:cosface}
-CosFace~\cite{CosFace} is another loss using margin to achieve better discriminative power than
-softmax~\ref{sec:softmax-loss}.
+CosFace~\cite{CosFace} is another loss using margin to improve discriminative power of softmax~\ref{sec:softmax-loss}.
 
 The decision boundary for binary case is defined by the following equation:
 \begin{equation}
@@ -210,13 +212,14 @@ The decision boundary for binary case is defined by the following equation:
     \cos{\theta_1} - m = \cos{\theta_2},
 \end{equation}
 where the symbols have exactly the same meaning as in the equation~\ref{eq:spherebound} of SphereFace decision boundary.
-The advantage of CosFace over SphereFace is the ease of optimization.
-The reason for that is that the decision boundary of CosFace is not being defined over the angular space.
+Since the decision boundary of CosFace is not being defined over the angular space the loss is easier to optimize than
+SphereFace.
 Optimization in angular space is more difficult because of the non-monotonicity of the cosine function.
 
-Another innovation over SphereFace is that not only is the weight vector $W_j$ normalized, but the feature vectors
-$x_i$ as well.
-This achieves much lower intra-class variability by concentrating more on the angle during training.
+Another innovation over SphereFace is the fact that not only is the weight vector $W_j$ normalized, but the feature
+vectors $x_i$ as well.
+This results in a much lower intra-class variability of the learned features as the emphasis is being put on the
+angle during training.
 By fixing $\norm{x}$ as some predetermined radius $s$ in equation~\ref{eq:softmaxmod} we get:
 \begin{equation}
     \mathcal{L}_{ns} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{s \cos(\theta_{y_i,i})}}
@@ -242,4 +245,4 @@ The equation~\ref{eq:cosface} is the final form of the CosFace loss.
 The authors of the research call it the Large Margin Cosine Loss (LMCL).
 
 \section{ArcFace Loss}\label{sec:arcface}
-ArcFace loss is used in this thesis which makes it the topic of the following chapter~\ref{ch:arcface}.
+ArcFace loss is used in this thesis which makes it a standalone chapter~\ref{ch:arcface}.

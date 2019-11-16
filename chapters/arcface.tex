@@ -1,8 +1,8 @@
 \chapter{ArcFace}\label{ch:arcface}
 ArcFace~\cite{ArcFace} is a research which became public in 2018 and achieved state-of-the-art results on LFW dataset.
 
-This chapter is relatively short because most of the ideas leading to ArcFace were already applied in the preceding
-research like SphereFace~\ref{sec:sphereface-loss} and CosFace~\ref{sec:cosface}.
+This chapter is relatively short because most of the ideas leading to ArcFace were already described in
+SphereFace~\ref{sec:sphereface-loss} and CosFace~\ref{sec:cosface} sections.
 To name these ideas they are normalization of class weight and feature vector and incorporation of margin in the loss
 function equation.
 These two ideas improve the intra-class variance in angular space resulting in a model with better discriminative
@@ -12,14 +12,14 @@ Like SphereFace and CosFace, ArcFace originates in the equation of \textit{softm
 There are five steps separating the original and the improved version.
 The first four are equivalent to those in SphereFace:
 \begin{enumerate}
-    \item First step is to fix the bias $b_j = 0$.
-    \item Then we transform the logit using the dot product definition $W_j^T x_i = \norm{W_j} \norm{x_j} \cos \theta_j$
-    $\theta$ is the angle between the weight $W_j$ and the feature $x_i$.
-    \item In a third step we fix the individual weights $\norm{W_j} = 1$ by $l_2$ normalization
-    \item We do the same for feature $x_i$ and re-scale it to $s$ where coefficient $s$ is predetermined feature scale.
-    These normalization steps make the prediction depend only on the angle $\theta$.
-    The embeddings are distributed on the hypersphere with a radius $s$.
+    \item fix the bias $b_j = 0$;
+    \item transform the logit using the dot product definition $W_j^T x_i = \norm{W_j} \norm{x_j} \cos \theta_j$
+    ($\theta$ is the angle between the weight $W_j$ and the feature $x_i$);
+    \item fix the individual weights $\norm{W_j} = 1$ by $l_2$ normalization;
+    \item do the same for feature $x_i$ and re-scale it to a predetermined feature scale $s$.
 \end{enumerate}
+The two normalization steps make the prediction depend only on the angle $\theta$.
+The embeddings are distributed on the hypersphere with a radius $s$.
 
 \begin{figure}[H]
     \centering
@@ -36,8 +36,8 @@ At this point the loss function equation is as follows:
 
 \begin{enumerate}
     \setcounter{enumi}{4}
-    \item Now we incorporate the additive angular margin penalty \textit{m} between $x_i$ and $W_{y_i}$.
-    The angular margin is equal to the geodesic distance\footnote{Distance of a curve representing shortest path
+    \item In the last step the additive angular margin penalty \textit{m} between $x_i$ and $W_{y_i}$ is incorporated.
+    The margin is equal to the geodesic distance\footnote{Distance of a curve representing shortest path
     between two points in a surface.} on the hypersphere.
     This is the reason why the method is called \textit{ArcFace}.
 \end{enumerate}
@@ -51,7 +51,7 @@ It has been experimentally determined that the best performance is achieved for 
 
 \section{Comparison with Other Losses}\label{sec:arc-comparison}
 By having a look at table~\ref{tbl:arcfaceboundcomp} and figure~\ref{fig:arcfacecomp} we can do a comparison of
-geometric differences of decision margins.
+geometric differences of different decision margins.
 
 \begin{table}[H]
     \begin{tabularx}{\textwidth}{l|Y}
@@ -75,8 +75,8 @@ The advantage of \textit{ArcFace} is its constant linear angular margin througho
 \end{figure}
 
 We can see the concrete percentual results in table~\ref{tbl:arcfacecomp}.
-ResNet100 with ArcFace loss trained on MS1MV2~\ref{subsec:ms1m} dataset exceeded the results of other methods mentioned
-in this thesis.
+The performance of ResNet100 with ArcFace loss trained on MS1MV2~\ref{subsec:ms1m} dataset exceeded that of other
+methods mentioned in this thesis.
 
 \begin{table}[H]
     \begin{tabularx}{\textwidth}{l|XXc}

@@ -1,7 +1,7 @@
 \chapter{Evaluation Metrics}\label{ch:evaluation-metrics}
-In this section I will define metrics used for system performance evaluation.
+In this section I will define metrics used for performance evaluation.
 
-Before doing so it is necessary to describe constituents of confusion matrix~\ref{fig:confusionmat}.
+Before doing so, it is necessary to describe constituents of the confusion matrix~\ref{fig:confusionmat}.
 
 \begin{figure}[H]
     \centering
@@ -31,13 +31,13 @@ Mathematically speaking precision is defined as the following fraction:
 \end{equation}
 where TP and FP are the constituents of the confusion matrix~\ref{fig:confusionmat}.
 
-Significant advantage of precision is that it allows us to detect faulty model and dataset mislabelings.
+A useful feature of precision is that it can be used to detect faulty model and dataset mislabelings.
 This property was extensively used during system implementation~\ref{ch:implementation}.
 
 \section{Recall}\label{sec:recall}
 Recall~\cite{PreRec} (also called sensitivity) is the fraction of the total amount of relevant instances that were
 actually retrieved.
-Definition of recall is the following:
+A definition of recall is the following:
 \begin{equation}
     Recall = \frac{TP}{TP + FN},
 \end{equation}

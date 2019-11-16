@@ -3,8 +3,8 @@ The system pipeline\footnote{See footnote on page~\pageref{foot:pipe}} consists 
 data preprocessing~\ref{sec:data-preprocessing}, feature extraction~\ref{sec:feature-extraction} and
 evaluation~\ref{sec:evaluation}.
 
-The system is implemented in \textit{Python} programming language.
-Libraries \textit{NumPy} and \textit{PyTorch} are being extensively used throughout the whole pipeline.
+The algorithm is implemented in \textit{Python} programming language.
+Libraries \textit{NumPy} and \textit{PyTorch} are being extensively used throughout the whole project.
 
 \section{Data Preprocessing}\label{sec:data-preprocessing}
 \begin{wrapfigure}[7]{r}{0pt}
@@ -47,7 +47,7 @@ Libraries \textit{NumPy} and \textit{PyTorch} are being extensively used through
     \caption{Standard image dataset format}
     \label{fig:dataset}
 \end{wrapfigure}
-The goal of preprocessing is to convert the input dataset~\ref{subsec:dataset-description} to a standard format.
+The goal of preprocessing is to convert the input dataset~\ref{subsec:dataset-description} to the standard format.
 The standardized dataset consists of directories with each directory representing one identity/label.
 In these directories there are images corresponding to the identity.
 In this case, the images contain faces in different positions.
@@ -61,9 +61,10 @@ and array data types.} format.
 
 In every annotation file there is a dictionary object, where key is a name and value is a list of detections.
 Every detection contains information about frame and the position of the face.
-This information is used to transform the dataset to standardized format.
+This information is used to process the dataset.
 The reference face position was selected by human.
-Because of that, the geometry of the area is not always consistent which significantly decreases the model performance.
+Because of that, the geometry of the area is not always consistent.
+This significantly decreases the model performance.
 For this reason, as is described in the following section~\ref{subsec:preproalgo}, this reference position is not
 used directly in the algorithm.
 
@@ -84,23 +85,25 @@ The preprocessing algorithm consists of seven steps:
     \item First I iterate over the annotation files.
     \item Then I iterate over the names and detections within the file.
     \item In the third step I fetch the frame out of the video corresponding to the detection.
-    \item Then I detect all the faces in the frame using MTCNN detector.
+    \item \label{itm:pre4} Then I detect all the faces in the frame using MTCNN detector.
     The detector returns coordinates of the bounding boxes\footnote{See footnote on page~\pageref{foot:bbox}} and the
     facial landmarks\footnote{Salient regions of the face.}.
     \item I select the detection which meets the following two conditions:
     \begin{enumerate}
-        \item has the biggest IoU with the bounding box from the annotation file of all the detections;
+        \item has the biggest IoU with reference of all the detections;
         \item the IoU value is at least \textbf{0.5} (This value has been determined experimentally as
         is described in the section~\ref{subsec:detection-mislabelings}.).
     \end{enumerate}
-    In case these two conditions are not met for any of the detections the frame is omitted.
-    \item Now I perform face frontalization using the facial landmarks from the previous steps and the predetermined
-    position of target facial landmarks.
+    If these conditions are not met for any of the detections the frame is omitted.
+    \item At this point I perform face frontalization using the facial landmarks from step~\ref{itm:pre4} and the
+    predetermined reference position.
     This is achieved by using the least squares method to find an affine transformation\footnote{A function between
     affine spaces which preserves points, straight lines and planes.} between the two sets of coordinates.
-    After the transformation the image geometry is 128x128 and the facial landmarks are in the same position across
-    the whole dataset.
-    \item In the last step I save the transformed image on the path defined by the standardized dataset format
+    Applying the transformation results in an image with facial landmarks in the similar position as the reference.
+    To carry out the transformation \textit{OpenCV} library is used.
+    The implementation in this library allows for specification of the output size.
+    For this reason the dimension of the transformed image is $128 \times 128$ pixels.
+    \item In the last step I save the image to a location defined by the standardized dataset format
     (\path{dataset/name/image_128x128.jpg}).
 \end{enumerate}
 
@@ -113,25 +116,24 @@ In this study this process is carried out by feeding the input image $x_i \in \m
 On the output we retrieve a feature vector $y_i \in \mathbb{R}^{1024}$.
 
 The model used is 18 layer ResNet~\ref{subsec:resnet} which was trained under a supervision of the ArcFace loss.
-The training process was not carried out as part of this thesis.
-The pretrained model was downloaded from the ArcFace implementation repository~\cite{ArcFacePyTorch}.
+The training process was not executed as part of this study since the trained model is freely available online.
+The model was downloaded from the ArcFace implementation repository~\cite{ArcFacePyTorch}.
 
 \subsection{Feature Extraction Algorithm}\label{subsec:feexalgo}
 The feature extraction algorithm consists of 6 steps:
 \begin{enumerate}
-    \item Initially I will iterate over the images in the dataset.
-    \item In the second step I save the image and the flipped version into an array
-    with shape $2\times1\times128\times128$.
-    \item With this shape, the array can be put on the inputs of ResNet-18.
-    \item I retrieve the feature vector on the output.
-    \item In the fifth step the vector along with the corresponding label is saved into an array.
-    \item Once all the feature vectors are computed, the resulting array is saved using \textit{h5py} module.
+    \item iterate over the images in the dataset;
+    \item save the image and the flipped version into an array with shape $2\times1\times128\times128$;
+    \item feed the array to the ResNet-18 model;
+    \item retrieve the feature vector on the output;
+    \item save the vector along with the corresponding label into an array;
+    \item once all the feature vectors are computed, save the resulting array using the \textit{h5py} module.
 \end{enumerate}
 
 In the final array there are 478529 feature vectors.
 The whole file is approximately 2 GB in size.
 
-Having the feature vectors computed we can carry out evaluation~\ref{sec:evaluation}.
+Having the feature vectors computed we can carry out the evaluation~\ref{sec:evaluation}.
 
 \section{Evaluation}\label{sec:evaluation}
 The system's performance is evaluated on the verification task.
@@ -150,12 +152,12 @@ The number of vector pairs is equal to
     N_{pairs} = \frac{n\left(n+1\right)}{2} = \frac{478529\left(478529+1\right)}{2} \approx 114.50 \cdot 10^9,
 \end{equation}
 where $n = 478529$ is the number of vectors in the dataset.
-If we computed all the distances at once using optimized matrix operations we would need at least 460 GB of RAM memory.
+If we computed all the distances using optimized matrix operations at once we would need at least 460 GB of RAM memory.
 
 Given that the algorithm time complexity is $O(n^2)$ and the big memory demands it was desirable to split the distance
 matrix into smaller sub-matrices.
-These sub-matrices than could be submitted to different CPU cores to process which significantly reduced the computation
-time.
+Splitting the matrices allows for parallel processing as the sub-matrices can be processed on different CPU cores.
+This significantly reduced the computation time.
 This approach made the use of optimized matrix libraries possible while reducing the excessive memory demands.
 
 There are 5 steps in the parallelized algorithm:
@@ -178,7 +180,7 @@ There are 5 steps in the parallelized algorithm:
     \item I use the methods \textit{sum} and \textit{logical\_and} along with elementwise binary value inversion to
     count the number of \textit{true positives (TP)}, \textit{true negatives (TN)}, \textit{false positives (FP)} and
     \textit{false negatives (FN)}.
-    \item In the last step I do elementwise summation of the arrays which were returned from the processes.
+    \item In the last step I do elementwise summation of the arrays which were returned from the parallel processes.
 \end{enumerate}
 
 The output of the algorithm is an array with 200 rows and 4 columns.
@@ -188,9 +190,10 @@ Having all these values accumulated we can proceed with computation of all the r
 
 \subsection{Performance Comparison}\label{subsec:performance-comparison}
 In order to evaluate the performance I implemented an algorithm which computes precision~\ref{sec:precision},
-recall~\ref{sec:recall} and $F_1$ score~\ref{sec:f-score} on the data from previous section.
+recall~\ref{sec:recall} and $F_1$ score~\ref{sec:f-score} on the data from the previous section.
 
 In figure~\ref{fig:prft} we can see the progression of these metrics.
+The custom implementation surpassed the commercial system by two percents.
 
 \begin{figure}[H]
     \begin{subfigure}{\textwidth}
@@ -211,9 +214,9 @@ In figure~\ref{fig:prft} we can see the progression of these metrics.
 \end{figure}
 
 \subsection{Detection of Mislabelings}\label{subsec:detection-mislabelings}
-As I mentioned in the section~\ref{sec:precision}, precision curve can be used to detect incorrect labels in the
+As I mentioned in the section~\ref{sec:precision}, the precision curve can be used to detect incorrect labels in the
 dataset.
-In figure~\ref{fig:faulty_prft} there are three functions dependent on threshold.
+In figure~\ref{fig:faulty_prft} there are three functions dependent on the threshold.
 
 \begin{figure}[H]
     \centering
@@ -224,8 +227,10 @@ In figure~\ref{fig:faulty_prft} there are three functions dependent on threshold
 
 By the definition of precision ($Precision = \frac{TP}{TP+FP}$), there should not be any false positives
 for threshold 0 because in such a setting, the system is strongly biased towards false negatives.
-With this in mind, value of precision which is not equal to 1 for threshold 0 is a sign that there are either
-mislabelings in the dataset or that the whole model is faulty.
+With this in mind, precision value which is not equal to 1 for threshold 0 is a sign of error.
+This error can either reside in the dataset or in the model.
+If the error is in the dataset it means that there are mislabelings.
+If it is in the model the whole system is faulty.
 
 \begin{figure}[H]
     \centering
@@ -234,12 +239,12 @@ mislabelings in the dataset or that the whole model is faulty.
     \label{fig:faulty_bbox}
 \end{figure}
 
-This idea was used extensively during the experimentation.
+This property of precision was used extensively during the experimentation.
 Figure~\ref{fig:faulty_bbox} is an example of faulty face detection.
 Because of the white stripe, the man in the foreground was not detected by the MTCNN detector selecting the bald man
 on the right instead.
-This led to an error in the dataset and it is the reason why the IoU threshold was put in place during the data
-preprocessing~\ref{sec:data-preprocessing}.
+This led to an error in the dataset.
+This issue was fixed by putting IoU threshold in place during the data preprocessing~\ref{sec:data-preprocessing}.
 
 \subsection{Face Detector Evaluation}\label{subsec:detectorevaluation}
 In order to evaluate the detector I've implemented an algorithm which computes recall~\ref{sec:recall} on the IoU
