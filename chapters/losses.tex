@@ -5,11 +5,11 @@ How well the model discriminates can be measured by the compactness of clusters 
 distance between them (inter class variance).
 The goal is for the clusters to be as compact as possible while maximizing the distance in-between them.
 
-This chapter focuses on research of loss functions used in facial recognition tasks.
+This chapter focuses on the research of loss functions used in facial recognition tasks.
 
 \section{Softmax Loss}\label{sec:softmax-loss}
-Softmax~\cite{ArcFace} is the most widely used loss function in general classification tasks and its definition is as
-follows:
+Softmax~\cite{ArcFace} is the most widely used loss function in general classification tasks.
+The definition of the loss is as follows:
 \begin{equation}
     \label{eq:softmax}
     \mathcal{L}_S = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{W^T_{y_i} x_{i} + b_{y_i}}}
@@ -20,20 +20,21 @@ $W_j \in \mathbb{R}^{d}$ is the \textit{j}-th column of the weight matrix $W \in
 is the corresponding bias term.
 \textit{N} is the batch size and \textit{n} is the class number.
 
-Major drawback of softmax loss is that it doesn't encourage cluster compactness.
+There is one major drawback of softmax loss.
+It doesn't encourage cluster compactness.
 In other words, it fails to guarantee similarity among samples within a category.
 This makes the learned features not discriminative enough for the open-set face recognition
 problem~\footnote{\label{foot:openset}Identifying samples which were not present in the training dataset.}.
 
-The second issue is that the dimension of the output weight matrix grows linearly with the number of identities in the
+Another issue is the dimension of the output weight matrix which grows linearly with the number of identities in the
 training set.
-This is impractical for large scale deployment.
+This makes softmax loss impractical for a large scale deployment.
 
 \section{Triplet Loss}\label{sec:triplet-loss}
 Triplet loss~\cite{TripletLoss} is a loss function which can be optimized by minimizing the distance between
 \textit{anchor} and \textit{positive} point while maximizing the distance between \textit{anchor} and \textit{negative}
 point.
-These points are represented by feature vectors.
+These points are represented by vectors in the feature space.
 The learning process is illustrated in the figure~\ref{fig:tripletloss}.
 
 \begin{figure}[H]
@@ -43,26 +44,29 @@ The learning process is illustrated in the figure~\ref{fig:tripletloss}.
     \label{fig:tripletloss}
 \end{figure}
 
-Anchor and positive points are vectors which belong to the same class whereas negative point belongs to another one.
-In the context of facial recognition one class is one identity therefore anchor and positive point are vectorised
-representation of two images of one face.
+Anchor and positive points belong to the same class whereas negative point belongs to another one.
+In the context of facial recognition one class is one identity.
+This makes the anchor and the positive point a vectorised representation of two images of one face.
 
-In mathematical terms the loss can be described using Euclidean distance function as follows
+In mathematical terms the loss can be described using the Euclidean distance function as follows:
 \begin{equation}
     \sum_{i}^{N} \left[ \norm{f(x_{i}^{a}) - f(x_{i}^{p}))}^2_2
     - \norm{f(x_{i}^{a}) - f(x_{i}^{n}))}^2_2 + \alpha \right],
 \end{equation}
-where $f(x_{i}^{a})$, $f(x_{i}^{p})$ and $f(x_{i}^{n})$ are feature vectors of anchor, positive and
-negative point of triplet denoted by \textit{i}.
+where $f(x_{i}^{a})$, $f(x_{i}^{p})$ and $f(x_{i}^{n})$ are the feature vectors of the anchor and the positive and
+negative point.
+The index \textit{i} denotes the triplet.
 \textit{N} is the number of triplets in the dataset.
 
 The drawbacks of \textit{triplet loss} are the demands entailed by the construction of the triplets.
-The number of those is subject to combinatorial explosion and inevitably results in slow convergence and instability
+The number of those is subject to a combinatorial explosion and inevitably results in a slow convergence and
+instability.
 This is a serious issue especially for large datasets.
 
 \section{Center Loss}\label{sec:center-loss}
-The main objective of the research~\cite{CenterLoss} was to design a loss function which solves the main drawbacks of
-\textit{sofmax loss}~\ref{sec:softmax-loss} and \textit{triplet loss}~\ref{sec:triplet-loss}.
+The main goal of this research~\cite{CenterLoss} was to design a loss function which solves the main drawbacks of
+the two previously mentioned losses
+(\textit{sofmax loss}~\ref{sec:softmax-loss} and \textit{triplet loss}~\ref{sec:triplet-loss}).
 
 The discriminative power of the learned features is enhanced by incorporation of the distance of features to the
 corresponding class centers.
@@ -80,7 +84,7 @@ The center loss function is intuitively defined by the following equation:
     \mathcal{L}_C = \frac{1}{2} \sum_{i=1}^{m} \norm{x_i - c_{y_i}}_2^2,
 \end{equation}
 where $c_{y_i} \in \mathbb{R}^{d}$ denotes the $y_i$-th class center of the features.
-Recomputing the centers by taking the average of the features over the whole training set id too inefficient and
+Recomputing the centers by taking the average of the features over the whole training set is too inefficient and
 impractical.
 
 To address this problem the authors proposed updating the centers based on a mini-batch instead of the whole training
@@ -88,7 +92,7 @@ set.
 To avoid large perturbations caused by mislabeled samples, there is a parameter $\alpha$ with which we control the
 learning rate of the centers.
 
-In the equation~\ref{eq:centup} we can see how the center update is computed:
+The equation~\ref{eq:centup} defines the center update:
 \begin{align}
     \frac{\partial \mathcal{L}_C}{\partial x_i} &= x_i - c_{y_i} \\
     \Delta c_j &= \frac{\sum_{i=1}^m \delta(y_i=j) \cdot (c_j-x_i)}{1+\sum_{i=1}^m \delta(y_i=j)}, \label{eq:centup}
@@ -104,7 +108,7 @@ The final loss is described by the following formula:
 
 Figure~\ref{fig:centerlosslambda} is a great visualization of the effect of hyperparameter $\alpha$ upon the cluster
 compactness.
-As is to be expected, higher values of the parameter result in more compact clusters.
+As is to be expected, higher values of the parameter result in clusters which are more compact.
 
 \begin{figure}[H]
     \centering
