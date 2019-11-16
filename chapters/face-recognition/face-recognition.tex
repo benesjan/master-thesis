@@ -4,7 +4,7 @@ Facial recognition is a task of verifying or identifying a person from digital i
 As I mentioned in the definition, there are two main subtasks~\cite{FaceRec}:
 \begin{enumerate}
     \item \textbf{Verification} deals with verifying whether the person in the image is who he claims he is.
-    Typical modern use case of verification is smartphone unlocking with face.
+    A typical modern use case of verification is smartphone unlocking with face.
     An example of such system is Face ID developed by Apple Inc.
 
     \item \textbf{Identification} is a task of matching a person to an identity.
@@ -28,7 +28,7 @@ each element is the input of the next.} usually has the following four steps:
     \item \textbf{Feature extraction} is a process of computing a feature vector\footnote{A feature vector is a vector
     that contains information describing an object's important characteristics.} of the face.
     Architecture of models used for feature extraction was described in the previous chapter~\ref{ch:cnn}.
-    \item \textbf{Feature matching} uses feature vector from the previous task to identify the person in the image.
+    \item \textbf{Feature matching} uses feature vector from the previous task to identify a person in the image.
     The algorithm uses a database of pre-computed feature vectors and compares them to the newly extracted one.
     The identity associated with the feature vector which has the smallest distance from the extracted one is
     considered to be the identity of the person in the image.
