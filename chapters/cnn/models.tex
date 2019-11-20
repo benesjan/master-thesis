@@ -4,7 +4,7 @@ This section contains an overview of selected modern models used extensively in 
 \subsection{InceptionNet}\label{subsec:inceptionnet}
 InceptionNets are a class of models in which there are multiple kernel sizes operating at the same level.
 This is desirable because the right kernel size is dependent on how globally the information is distributed.
-A large kernel is preferred when the information is distributed globally and vice versa.
+A large kernel is preferred when the information is distributed globally and, vice versa.
 
 \begin{figure}[H]
     \centering
@@ -15,13 +15,13 @@ A large kernel is preferred when the information is distributed globally and vic
 
 The inception of the inception block (figure~~\ref{fig:InceptionNet}) took place in 2014 in the paper~\cite{GoingDeeper}
 published by Google Inc.
-Models using inception blocks kept on improving and at the time of writing there is fourth version in use.
+Models using inception blocks kept on improving and at the time of writing, there is the fourth version in use.
 
 \subsection{ResNet}\label{subsec:resnet}
-A residual neural network (ResNet)~\cite{ResNet} is an ANN which allows for training of networks which contain tens
-of layers.
-Training of ANN this deep had been practically impossible before the invention of ResNet due to the problem of
-\textit{vanishing gradient}\footnote{See footnote on page~\pageref{foot:vangrad}} and \textit{degradation problem}.
+A residual neural network (ResNet)~\cite{ResNet} is an Artificial Neural Network (ANN) which allows for the training of
+very deep neural networks containing tens of layers.
+Training of ANNs this deep had been practically impossible before the invention of ResNet due to the problem of
+\textit{vanishing gradient} and \textit{degradation problem}.
 The first problem is exposed as a lack of convergence and the second one as a high training error.
 
 Both of these problems have been avoided by implementation of \textit{skip connections} which are illustrated in the
@@ -56,3 +56,7 @@ The block of layers is illustrated in the figure~\ref{fig:DenseNet}.
 DenseNets have several compelling advantages~\cite{DenseNet}.
 They alleviate the vanishing-gradient problem, strengthen feature propagation, encourage feature reuse, and
 substantially reduce the number of parameters.
+
+% TODO: Implementation details of skip connections
+% U obou, ResNetu i DenseNetu bych určitě zmínil, jakým způsobem jsou skip-connectiony implementovány,
+% i.e. ResNet - element-wise addition; DenseNet - channel concatenation
