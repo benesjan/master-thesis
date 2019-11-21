@@ -1,13 +1,13 @@
 \section{Face Detection}\label{sec:face-detection}
-As I mentioned in the description of a facial recognition pipeline the goal of face detection is to find the location
+As I mentioned in the description of a facial recognition pipeline, the goal of face detection is to find the location
 of the face within the image.
 This is challenging in unconstrained environments due to various poses, illuminations and occlusions.
 
-To not digress too much from the main topic I will describe only the system which was put in use in the experimental
+To not digress too much from the main topic, I will describe only the system which was employed in the experimental
 part of this thesis.
 The detection algorithm is called MTCNN~\ref{subsec:mtcnn}.
 
-Before going through the process of face detection it is necessary to describe a method called Non-maximum Suppression.
+Before going through the process of face detection, it is necessary to describe a method called Non-maximum Suppression.
 
 \subsection{Non-maximum Suppression}\label{subsec:nms}
 Non-maximum Suppression (NMS) is a filtering algorithm of overlapping bounding
@@ -33,7 +33,7 @@ bounding box regression vectors.
 P-Net is fully convolutional neural network.
 
 Before passing the image to P-Net we resize the image to many different sizes.
-By doing so we make the model scale invariant.
+By doing so we make the model scale-invariant.
 
 Now we feed the images to the net.
 
@@ -52,28 +52,27 @@ Before passing the boxes to stage 2 we make the boxes square by elongating the s
 The name of the second stage is \textbf{Refined Network} (R-Net).
 The purpose of this stage is to filter out a large number of false positives and to calibrate the boxes.
 
-Initially we take the boxes from the previous stage and copy the pixel values to separate arrays.
+Initially, we take the boxes from the previous stage and copy the pixel values to separate arrays.
 In case the box is out of bounds we fill the "empty space" with zeros.
 
 Now we resize all the arrays to have the size of $24 \times 24$ pixels.
-Currently the pixel values are in the range of $<0; 255>$ which is not optimal for the model training.
-To work around the issue we normalize the values to $<-1; 1>$.
+We also normalize the pixel values to $<-1; 1>$.
 
-At this point we feed the images to R-Net and collect the outputs.
+At this point, we feed the images to R-Net and collect the outputs.
 
 The outputs are similar to that of P-Net.
 They also include the coordinates and the confidence levels.
 The difference is that the new coordinates are more accurate.
 
-In the last few steps of the stage 2 we remove the boxes with a lower confidence and perform NMS to remove the
+In the last few steps of the stage 2, we remove the boxes with a lower confidence and perform NMS to remove the
 redundant ones.
 
 Now we standardize the coordinates and reshape the bounding boxes to a square.
 
 \subsubsection{Stage 3}
-In the last stage we take the boxes from stage 2 and copy the pixel values to separate arrays.
-If there are any boxes which cross the image bounds we deal with then in the same way as in the previous stage.
-That is we fill the empty space with zeros.
+In the last stage, we take the boxes from the stage 2 and copy the pixel values to separate arrays.
+If there are any boxes which cross the image bounds, we deal with them in the same way as in the previous stage,
+i.e., we fill the empty space with zeros.
 
 Now we resize the images to be of $48 \times 48$ pixels and feed them into a neural network called
 \textbf{The Output Network} (O-Net).
@@ -81,8 +80,8 @@ Now we resize the images to be of $48 \times 48$ pixels and feed them into a neu
 O-Net is split into three layers at the top and as a result of this architectural choice produces three outputs:
 the coordinates of the bounding box, the coordinates of the facial landmarks and the confidence level of each box.
 
-In the final processing step of the whole MTCNN algorithm we get rid of the boxes with a low confidence score,
-we standardize the coordinates of both the landmarks and the boxes and  we filter the boxes with NMS.
+In the final processing step of the whole MTCNN algorithm, we get rid of the boxes with a low confidence score,
+we standardize the coordinates of both the landmarks and the boxes, and  we filter the boxes with NMS.
 
 \begin{figure}[H]
     \centering
@@ -91,4 +90,4 @@ we standardize the coordinates of both the landmarks and the boxes and  we filte
     \label{fig:mtcnn}
 \end{figure}
 
-Figure~\ref{fig:mtcnn} is a visualization of this three stage process.
+Figure~\ref{fig:mtcnn} is a visualization of this three-stage process.

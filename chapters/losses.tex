@@ -1,8 +1,8 @@
 \chapter{Loss Functions}\label{ch:loss-functions}
 The main objective of the research of loss functions is to design a function which leads to a model with superior
 discriminative abilities.
-How well the model discriminates can be measured by the compactness of clusters (intra class variance) and the
-distance between them (inter class variance).
+How well the model discriminates can be measured by the compactness of clusters (intra-class variance) and the
+distance between them (inter-class variance).
 The goal is for the clusters to be as compact as possible while maximizing the distance in-between them.
 
 This chapter focuses on the research of loss functions used in facial recognition tasks.
@@ -44,7 +44,7 @@ The learning process is illustrated in the figure~\ref{fig:tripletloss}.
     \label{fig:tripletloss}
 \end{figure}
 
-Anchor and positive points belong to the same class whereas negative point belongs to another one.
+Anchor and positive points belong to the same class, whereas negative point belongs to another one.
 In the context of facial recognition one class is one identity.
 This makes the anchor and the positive point a vectorised representation of two images of one face.
 
@@ -53,7 +53,7 @@ In mathematical terms the loss can be described using the Euclidean distance fun
     \sum_{i}^{N} \left[ \norm{f(x_{i}^{a}) - f(x_{i}^{p}))}^2_2
     - \norm{f(x_{i}^{a}) - f(x_{i}^{n}))}^2_2 + \alpha \right],
 \end{equation}
-where $f(x_{i}^{a})$, $f(x_{i}^{p})$ and $f(x_{i}^{n})$ are the feature vectors of the anchor and the positive and
+where $f(x_{i}^{a})$, $f(x_{i}^{p})$ and $f(x_{i}^{n})$ are the feature vectors of the anchor and the positive and the
 negative point.
 The index \textit{i} denotes the triplet.
 \textit{N} is the number of triplets in the dataset.
@@ -74,7 +74,7 @@ In other words, the network is penalized whenever the features are too far from 
 In the course of training the the centers are updated and the distances of features from centers are minimized.
 The model is trained under a joint supervision of softmax loss and center loss.
 The effect of these two losses is balanced by a hyperparameter\footnote{A parameter which is not a subject to the
-learning process}.
+learning process} $\lambda$.
 This joint supervision results in a loss function which combines the best of both worlds:
 inter-class discriminative power of \textit{softmax loss} and intra-class distance minimization of \textit{center loss}.
 
@@ -84,12 +84,12 @@ The center loss function is intuitively defined by the following equation:
     \mathcal{L}_C = \frac{1}{2} \sum_{i=1}^{m} \norm{x_i - c_{y_i}}_2^2,
 \end{equation}
 where $c_{y_i} \in \mathbb{R}^{d}$ denotes the $y_i$-th class center of the features.
-Recomputing the centers by taking the average of the features over the whole training set is too inefficient and
-impractical.
+However, recomputing the centers by taking the average of the features over the whole training set is too inefficient
+and impractical.
 
-To address this problem the authors proposed updating the centers based on a mini-batch instead of the whole training
+To address this problem, the authors proposed updating the centers based on a mini-batch instead of the whole training
 set.
-To avoid large perturbations caused by mislabeled samples, there is a parameter $\alpha$ with which we control the
+To avoid large perturbations caused by mislabeled samples, there is a parameter $\lambda$ with which we control the
 learning rate of the centers.
 
 The equation~\ref{eq:centup} defines the center update:
@@ -106,7 +106,7 @@ The final loss is described by the following formula:
     {\sum_{j-1}^{n} e^{W^T_{j} x_{i} + b_{j}}} + \frac{\lambda}{2} \sum_{i=1}^{m} \norm{x_i - c_{y_i}}_2^2,
 \end{equation}
 
-Figure~\ref{fig:centerlosslambda} is a great visualization of the effect of hyperparameter $\alpha$ upon the cluster
+Figure~\ref{fig:centerlosslambda} is a great visualization of the effect of hyperparameter $\lambda$ upon the cluster
 compactness.
 As is to be expected, higher values of the parameter result in clusters which are more compact.
 
@@ -132,7 +132,7 @@ where $\beta$ is a mini-batch, $D$ is the feature space dimension, $\delta$ is a
 trivial number for computation stability, $\boldsymbol{f}^{(i)}$ is the \textit{i}-th feature vector and $l_i$ is
 its label.
 
-Having the centroid equation defined we can proceed with a definition of the term we are trying to maximize during
+Having the centroid equation defined, we can proceed with a definition of the term we are trying to maximize during
 a model fitting:
 \begin{equation}
     p_{l_i}^{(i)} = \frac{exp C(\boldsymbol{f}^{(i)}, \boldsymbol{c}_{l_{i}})}
@@ -149,13 +149,13 @@ Now we can move to the final COCO loss function definition:
 SphereFace~\cite{SphereFace} is a loss function which was published in 2018.
 The research significantly distinguishes itself from the previously mentioned losses by not relying on an euclidean
 margin.
-SphereFace uses angular margin instead.
+SphereFace uses an angular margin instead.
 This has proven to be highly effective in face recognition tasks.
-The name of the loss hints how to features are transformed during the loss computation.
+The name of the loss hints about how the features are transformed during the loss computation.
 The features are projected onto a hypersphere manifold.
 
 SphereFace originates from the softmax loss~\ref{sec:softmax-loss}.
-To derive SphereFace from softmax we first incorporate the angle into the softmax equation using the dot
+To derive SphereFace from softmax, we first incorporate the angle into the softmax equation using the dot
 product definition ($a \cdot b = \norm{a} \norm{b} \cos \theta$):
 
 \begin{align*}
@@ -167,7 +167,6 @@ product definition ($a \cdot b = \norm{a} \norm{b} \cos \theta$):
 where $\theta_{j,i}$ is the angle between vector $W_j$ and $x_i$.
 The meanings of the remaining symbols are equal to those in the softmax equation~\ref{eq:softmax}.
 
-
 Next we normalize $\norm{W_j} = 1, \forall j$ and set the bias term to 0.
 \begin{equation}
     \label{eq:softmaxmod}
@@ -175,7 +174,7 @@ Next we normalize $\norm{W_j} = 1, \forall j$ and set the bias term to 0.
     {\sum_{j-1}^{n} e^{\norm{x_{i}} \cos(\theta_{j,i})}}
 \end{equation}
 While it's possible to learn features with the modified loss the result would not be discriminative enough.
-To solve this issue the researches incorporated angular margin:
+To solve this issue, the researches incorporated angular margin:
 \begin{equation}
     \label{eq:ang}
     \mathcal{L}_{ang} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{\norm{x_i} \cos(m\theta_{y_i,i})}}
@@ -204,15 +203,16 @@ where $k \in \left[ 0, m-1 \right]$.
 The parameter $m \geq 1$ gives us control over the angular margin size.
 
 \section{CosFace Loss}\label{sec:cosface}
-CosFace~\cite{CosFace} is another loss using margin to improve discriminative power of softmax~\ref{sec:softmax-loss}.
+CosFace~\cite{CosFace} is another loss using margin to improve the discriminative power of
+softmax~\ref{sec:softmax-loss}.
 
-The decision boundary for binary case is defined by the following equation:
+The decision boundary for a binary case is defined by the following equation:
 \begin{equation}
     \label{eq:cosbounary}
     \cos{\theta_1} - m = \cos{\theta_2},
 \end{equation}
 where the symbols have exactly the same meaning as in the equation~\ref{eq:spherebound} of SphereFace decision boundary.
-Since the decision boundary of CosFace is not being defined over the angular space the loss is easier to optimize than
+Since the decision boundary of CosFace is not being defined over the angular space, the loss is easier to optimize than
 SphereFace.
 Optimization in angular space is more difficult because of the non-monotonicity of the cosine function.
 
@@ -226,8 +226,8 @@ By fixing $\norm{x}$ as some predetermined radius $s$ in equation~\ref{eq:softma
     {\sum_{j-1}^{n} e^{s \cos(\theta_{j,i})}}
 \end{equation}
 This loss is called Normalized Softmax Loss (NSL) in the CosFace research paper.
-NSL emphasizes correct classification but is not discriminative enough for face recognition tasks.
-For this reason (as was mentioned in the SphereFace research as well) the margin is incorporated:
+NSL emphasizes correct classification but it is not discriminative enough for face recognition tasks.
+For this reason (as was mentioned in the SphereFace research as well), the margin is incorporated:
 \begin{equation}
     \label{eq:cosface}
     \mathcal{L}_{lmc} = -\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{s \left( \cos(\theta_{y_i,i}) - m \right)}}

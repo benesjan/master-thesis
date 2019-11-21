@@ -1,4 +1,4 @@
-\section{Commercial Systems}\label{sec:systems}
+\section{Face Recognition Systems}\label{sec:systems}
 There are two main approaches of training CNNs for face recognition.
 
 The first one is to train a multi-class classifier which can separate identities directly.
@@ -15,14 +15,14 @@ The research is notable for its use of advanced alignment technique which consis
 \begin{enumerate}
     \item \textbf{2D Alignment}
 
-    In this step the image is aligned in such a way that the fiducial points/landmarks are in a similar position
+    In this step, the image is aligned in such a way that the fiducial points/landmarks are in a similar position
     to predetermined reference positions.
     To carry out this process it is first necessary to detect the 6 fiducial points/landmarks.
     These points and the reference positions are then used to find the parameters of an affine transformation.
     Applying the transformation to the original image gives us the desired result.
     \item \textbf{3D Alignment}
 
-    In this step the image is warped onto a generic 3D shape model.
+    In the second step, the image is warped onto a generic 3D shape model.
     This is achieved by localization of 67 fiducial points in the image and then fitting an affine
     camera\footnote{linear mathematical model to approximate the perspective projection followed by an ideal
     pinhole camera.} \textit{P} using the generalized least squares solution and the reference position $x_{3d}$ of
@@ -61,7 +61,7 @@ The output of the network is a vector representing a position in an euclidean sp
 number representing an identity.
 This approach allows for straight-forward implementation of \textit{verification} and
 \textit{identification}~\ref{ch:face-rec}.
-Implementation of verification involves thresholding the distance between the reference and the newly obtained
+The implementation of verification involves thresholding the distance between the reference and the newly obtained
 embedding; and identification becomes k-NN classification problem.
 
 \begin{figure}[H]
@@ -81,4 +81,7 @@ only 128 dimensions.
 
 Another advantage is how well the model handles faces which are not in ideal position.
 This removed the need for complex preprocessing and face frontalization.
-To use proper terms the system is \textit{pose invariant}.
+To use proper terms the system is \textit{pose-invariant}.
+
+\subsection{EyeDea}\label{subsec:eyedea}
+% TODO

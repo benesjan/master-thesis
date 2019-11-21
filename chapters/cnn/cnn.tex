@@ -30,15 +30,15 @@ Modern CNNs also usually contain \textit{locally connected layer}~\ref{subsec:lc
 
 \subsection{Dense/Fully Connected}\label{subsec:dense}
 The dense layer is the simplest type of layer present in CNN models.
-Its output is determined simply by multiplication of its \textit{inputs} (x) with \textit{weight matrix}
-(denoted W in~\ref{eq:dense}) and addition of \textit{bias} (u):
+Its output is determined simply by multiplication of its \textit{inputs} (\textit{x}) with \textit{weight matrix}
+(denoted \textit{W} in~\ref{eq:dense}) and addition of \textit{bias} (\textit{b}):
 \begin{equation}
     \label{eq:dense}
-    h[i, j] = u[i,j] + \sum_{a,b} W[i,j,a,b] \cdot x[i+a,j+b],
+    h[i, j] = b[i,j] + \sum_{k,l} W[i,j,k,l] \cdot x[i+k,j+l],
 \end{equation}
 where $x\left[ i, j \right]$ and $h\left[ i, j \right]$ denote pixel location $\left( i, j \right)$ in an image and
 hidden representation, respectively.
-The indices $a$, $b$ run over both positive and negative offsets, covering the entire image.
+The indices $k$, $l$ run over both positive and negative offsets, covering the entire image.
 
 To demonstrate the number of parameters needed, let's imagine that we want to feed a greyscale image which is 256 pixels
 high and wide to a dense layer.
@@ -61,10 +61,10 @@ Let us examine the equation~\ref{eq:denseinv} to see how the original equation~\
 
 \begin{equation}
     \label{eq:denseinv}
-    h[i, j] = u + \sum_{a,b} W[a,b] \cdot x[i+a,j+b]
+    h[i, j] = b + \sum_{k,l} W[k,l] \cdot x[i+k,j+l]
 \end{equation}
 
-As is to be expected, bias \textit{u} and the weight matrix \textit{W} are no longer dependent upon the image
+As is to be expected, bias \textit{b} and the weight matrix \textit{W} are no longer dependent upon the image
 coordinates \textit{(i, j)}.
 As an example, we can think of an airplane detection algorithm whose goal is to find whether there is an airplane
 present in any part of the scene.
@@ -78,11 +78,11 @@ This type of invariance is called \textit{translational invariance}.
 Another principle used in CNNs is called \textit{locality principle}.
 This principle suggests, that we do not need to look far away from \textit{(i,j)} to gain valuable information about
 what is going on in that particular location.
-This is achieved, mathematically speaking, by limiting \textit{a} and \textit{b} to a range $\Delta$.
+This is achieved, mathematically speaking, by limiting \textit{k} and \textit{l} to a range $\Delta$.
 
 \begin{equation}
     \label{eq:denseinvloc}
-    h[i, j] = u + \sum_{a=-\Delta}^{\Delta} \sum_{b=-\Delta}^{\Delta} W[a,b] \cdot x[i+a,j+b]
+    h[i, j] = b + \sum_{k=-\Delta}^{\Delta} \sum_{l=-\Delta}^{\Delta} W[k,l] \cdot x[i+k,j+l]
 \end{equation}
 
 It is important to note that the range $\Delta$ is also known as the kernel size.
