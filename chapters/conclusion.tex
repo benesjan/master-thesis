@@ -2,8 +2,8 @@
 In the introduction~\ref{sec:goals} I stated the goals of this study.
 
 The main objective was to implement a state-of-the-art algorithm and compare its performance with a commercial system.
-Given that the performance of my system exceeded that of commercial one by two percents I dare to say that the
-goal of this thesis was met.
+Given that the performance of my system exceeded that of commercial one by two percents, I would consider the goals
+of this thesis as completed.
 
 \section{Possible Improvements}\label{sec:possible-improvements}
 I have two ideas which could lead to the improvements in system's performance:
@@ -11,7 +11,9 @@ I have two ideas which could lead to the improvements in system's performance:
     \item \textit{Fitting the model on relevant identities.} The model used at the core of the system (ResNet-18) was
     fitted on identities which are not relevant in the context of the system's application.
     While this is not an issue as the model works well on open-set\footnote{See footnote on page~\pageref{foot:openset}}
-    problems, training the model again is one way to improve the system.
+    problems, fine-tuning\footnote{A process of taking the weights of a trained neural network and using them as
+    an initialization for a new model being trained on a data from the same domain.} the model again is one way to
+    improve the system.
     \item \textit{Better face detection engine.} An area where the system is lacking is the face detection engine.
     The detector available in the Eyedea SDK seems to be significantly more robust than the one used in this work.
     This manifested itself when looking at the images of faulty MTCNN detection (see~\ref{fig:faulty_bbox}).

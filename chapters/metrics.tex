@@ -1,5 +1,5 @@
 \chapter{Evaluation Metrics}\label{ch:evaluation-metrics}
-In this section I will define metrics used for performance evaluation.
+In this chapter, I will define metrics used for performance evaluation.
 
 Before doing so, it is necessary to describe constituents of the confusion matrix~\ref{fig:confusionmat}.
 
@@ -20,12 +20,12 @@ FN is called \textbf{type II error}.
 
 \textbf{True Negatives} (TP) is the number of actual negatives being predicted as negative.
 
-With these terms introduced we can proceed with a definition of precision~\ref{sec:precision} and
+With these terms introduced, we can proceed with a definition of precision~\ref{sec:precision} and
 recall~\ref{sec:recall}.
 
 \section{Precision}\label{sec:precision}
 Precision~\cite{PreRec} is the number of relevant instances among the retrieved instances.
-Mathematically speaking precision is defined as the following fraction:
+Mathematically speaking, precision is defined as the following fraction:
 \begin{equation}
     Precision = \frac{TP}{TP + FP},
 \end{equation}
@@ -52,6 +52,6 @@ The metric is defined by the following formula:
 
 The important property of this metric is that it successfully deals with skewed data.
 This scenario occurs when there is much more positives than negatives in the data or vice versa.
-Typical example is a classifier used to diagnose a rare illness.
+A typical example is a classifier used to diagnose a rare illness.
 If the model always predicted false, the accuracy\footnote{Sum of true positives divided by the number of predictions.}
-would be high even thought the system would be essentially useless.
+would be high even though the system would be essentially useless.
