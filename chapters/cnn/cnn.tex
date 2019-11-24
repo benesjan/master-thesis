@@ -25,8 +25,7 @@ The image~\ref{fig:cnn} is an illustration of one of the oldest CNN models, call
 handwritten character recognition.
 There are three layer types in the architecture: \textit{dense}~\ref{subsec:dense},
 \textit{convolutional}~\ref{subsec:convolutional}, and \textit{pooling}~\ref{subsec:pooling} layer.
-Modern CNNs also usually contain \textit{locally connected layer}~\ref{subsec:lclayer}, and
-\textit{ReLU}~\ref{subsec:relu} layer.
+Modern CNNs also usually contain \textit{locally connected layer}~\ref{subsec:lclayer}.
 
 \subsection{Dense/Fully Connected}\label{subsec:dense}
 The dense layer is the simplest type of layer present in CNN models.
@@ -111,7 +110,38 @@ Locally connected layer is similar to convolutional layer but the difference is 
 learns different set of filters.
 This layer type is, for example, used by the DeepFace system~\ref{subsec:deepface}.
 
-\subsection{ReLU}\label{subsec:relu}
+\section{Other Concepts}\label{sec:otherconc}
+This section is about concepts which are not defined as a layer but form an important piece of modern CNNs nonetheless.
+To name these concept specifically, they are Batch Normalization~\ref{subsec:batchnorm} and
+Rectifier~\ref{subsec:rectifier} and Padding~\ref{subsec:padding}.
+
+\subsection{Batch Normalization}\label{subsec:batchnorm}
+Batch Normalization~\cite{BatchNormalization} is a method of reducing the negative impact of \textit{internal covariate
+shift} upon the model training.
+\textit{Covariate shift} is a change in the input distribution of learning systems.
+When this concept is applied not to the whole system, but only to its part, we call this phenomenon an \textit{internal
+covariate shift}.
+
+During the training the change of input distribution is caused by adjustments of the parameters of the preceding layers.
+This makes the optimal parameter setting in the hidden layers a moving target which dramatically slows down the
+convergence.
+
+This issue is alleviated by an incorporation of normalization into the model architecture, i.e., by fixing the means
+and variances of layer inputs.
+
+The mean and variance is computed over the current batch which is the reason why this method is called Batch
+Normalization.
+
+The output $y_i$ of the normalization step is computed using the following formula:
+\begin{equation}
+    y_i = \gamma \bar{x}_i + \beta,
+\end{equation}
+where $\bar{x}_i$ is the average of the current batch.
+Parameters $\gamma$ and $\beta$ are adjusting scale and shift, respectively.
+These parameters are learned during training.
+They were incorporated into the formula in order to restore the representative power of the network.
+
+\subsection{Rectifier}\label{subsec:rectifier}
 
 \begin{wrapfigure}{r}{7cm}
     \label{fig:relu}
@@ -119,21 +149,22 @@ This layer type is, for example, used by the DeepFace system~\ref{subsec:deepfac
     \caption{Illustration of ReLU activation function~\cite{ReLU}}
 \end{wrapfigure}
 
-Rectified linear unit (ReLU) layer applies the activation function\footnote{The activation
-function of a node defines the output of that node given an input or set of inputs.}~\ref{eq:relu} to the output of
-the preceding layer.
-In CNNs the layer is usually positioned at the output of convolutional layer~\ref{subsec:convolutional}.
-
+Another important innovation of modern CNNs is rectifier activation function\footnote{The activation function of
+a node defines the output of that node given an input or set of inputs.} defined as:
 \begin{equation}
     \label{eq:relu}
-    \mathrm{ReLU}(x) = max(0,x)
+    \mathrm{ReLU}(x) = max(0,x),
 \end{equation}
+where $x$ is the scalar input.
+
+A unit implementing this activation function is called a rectifier linear unit (ReLU)~\ref{eq:relu}.
+In CNNs ReLUs are usually positioned at the output of convolutional layer~\ref{subsec:convolutional}.
 
 The advantage of ReLU is its efficacy during the training and the reduced likelihood of a vanishing
 gradient\footnote{\label{foot:vangrad}A situation where a deep neural network is unable to propagate useful gradient
 information from the output end of the model back to the layers near the input end of the model.}.
 
-\section{Padding}\label{sec:padding}
+\subsection{Padding}\label{subsec:padding}
 To avoid loss of information at the edges of the image we usually use a method called \textit{padding}.
 This technique increases the image dimension by pixel addition around the original image.
 There are few padding variants which are differentiated by the value of the new pixels.
