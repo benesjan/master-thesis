@@ -34,7 +34,7 @@ figure~\ref{fig:ResNet}.
     \label{fig:ResNet}
 \end{figure}
 
-The skip connections let the in-between layers fit a residual mapping.
+The skip connections are implemented as elementwise addition and they let the in-between layers fit a residual mapping.
 This has proven to be an effective way of using deep neural networks to increase accuracy.
 
 ResNets are widely used in the field of facial recognition as well as in the field of computer vision as a whole.
@@ -53,10 +53,11 @@ The block of layers is illustrated in the figure~\ref{fig:DenseNet}.
     \label{fig:DenseNet}
 \end{figure}
 
+DenseNets implement the connections with preceding layers differently than ResNets.
+While ResNets use elementwise addition, DenseNets concatenate the feature maps.
+The big size of the feature map is not an issue because it is fed as an input into a convolutional layer,
+and consequently does not require training more parameters.
+
 DenseNets have several compelling advantages~\cite{DenseNet}.
 They alleviate the vanishing-gradient problem, strengthen feature propagation, encourage feature reuse, and
 substantially reduce the number of parameters.
-
-% TODO: Implementation details of skip connections
-% U obou, ResNetu i DenseNetu bych určitě zmínil, jakým způsobem jsou skip-connectiony implementovány,
-% i.e. ResNet - element-wise addition; DenseNet - channel concatenation
