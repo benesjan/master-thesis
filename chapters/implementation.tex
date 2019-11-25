@@ -1,12 +1,12 @@
 \chapter{System Design and Implementation}\label{ch:implementation}
 The system pipeline\footnote{See footnote on page~\pageref{foot:pipe}} consists of three separate processes:
-data preprocessing~\ref{sec:data-preprocessing}, feature extraction~\ref{sec:feature-extraction}, and
-evaluation~\ref{sec:evaluation}.
+preprocessing of the Czech News dataset~\ref{sec:data-preprocessing}, feature extraction~\ref{sec:feature-extraction},
+and evaluation~\ref{sec:evaluation}.
 
 The algorithm is implemented in \textit{Python} programming language.
 Libraries \textit{NumPy} and \textit{PyTorch}~\cite{PyTorch} are extensively used throughout the whole project.
 
-\section{Data Preprocessing}\label{sec:data-preprocessing}
+\section{Preprocessing of the Czech News Dataset}\label{sec:data-preprocessing}
 \begin{wrapfigure}[7]{r}{0pt}
     \centering
     \raisebox{0pt}[\dimexpr\height-0.831\baselineskip\relax]{%
@@ -186,29 +186,53 @@ The rows correspond to the threshold values; columns to \textit{TP}, \textit{TN}
 
 Having all these values accumulated we can proceed with computation of all the relevant metrics.
 
-\subsection{Performance Comparison}\label{subsec:performance-comparison}
+\subsection{System Evaluation}\label{subsec:syseval}
 In order to evaluate the performance, I implemented an algorithm which computes precision~\ref{sec:precision},
 recall~\ref{sec:recall} and $F_1$ score~\ref{sec:f-score} on the data from the previous section.
+The system is evaluated on LFW~\ref{subsec:lfw} and processed Czech News dataset~\ref{subsec:czenew}.
+In figure~\ref{fig:prft} there is a progression of these metrics.
 
-In figure~\ref{fig:prft} we can see the progression of these metrics.
-The custom implementation surpassed the commercial system by two percents.
+We can see that in comparison with LFW dataset the system achieved 6 \% higher performance on the processed
+Czech News dataset.
+
+LFW dataset was not aligned using the preprocessing algorithm described in section~\ref{sec:data-preprocessing},
+which leads to a slightly different positions of faces than what the model is used to.
+This is probably the reason for the low $F_1$ score on the dataset.
 
 \begin{figure}[H]
     \begin{subfigure}{\textwidth}
         \centering
-        \includegraphics[width=0.95\columnwidth]{images/implementation/prft_fav-128_N1.eps}
-        \caption{ResNet-18 trained under a supervision of ArcFace loss function}
-        \label{fig:prft_arcface}
+        \includegraphics[width=0.95\columnwidth]{images/implementation/prft_lfw-align-128.eps}
+        \caption{LFW dataset~\ref{subsec:lfw}}
+        \label{fig:prft_arcface_lfw}
     \end{subfigure}
 
     \begin{subfigure}{\textwidth}
         \centering
-        \includegraphics[width=0.95\columnwidth]{images/implementation/prft_eyedea.eps}
-        \caption{Commercial system (EyeFace SDK~\ref{subsec:eyeface})}
-        \label{fig:prft_eyedea}
+        \includegraphics[width=0.95\columnwidth]{images/implementation/prft_fav-128_N1.eps}
+        \caption{Processed Czech News dataset~\ref{subsec:czenew}}
+        \label{fig:prft_arcface_cze}
     \end{subfigure}
-    \caption{Progression of precision, recall and $F_1$ score with increasing threshold values.}
+    \caption{Progression of precision, recall and $F_1$ score with increasing threshold values. The metrics were
+    computed on the outputs of my system based on ResNet-18.}
     \label{fig:prft}
+\end{figure}
+
+
+\subsubsection{Comparison with Commercial System}\label{subsubsec:performance-comparison}
+In figure~\ref{fig:prft_eyedea} there is a similar chart as the one above.
+The difference is, that the values were computed on the outputs of EyeFace SDK~\ref{subsec:eyeface}.
+
+By comparing the chart below with chart~\ref{fig:prft_arcface_cze} we can see that the custom implementation
+surpassed the commercial system by two percents.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\columnwidth]{images/implementation/prft_eyedea.eps}
+    \caption{Progression of precision, recall and $F_1$ score with increasing threshold values. The metrics were
+    computed on the outputs of commercial system (EyeFace SDK~\ref{subsec:eyeface}) from the Czech News
+    dataset~\ref{subsec:czenew}.}
+    \label{fig:prft_eyedea}
 \end{figure}
 
 \subsection{Detection of Mislabelings}\label{subsec:detection-mislabelings}
