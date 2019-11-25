@@ -45,6 +45,10 @@ each element is the input of the next.} usually has the following four steps:
 
 It is important to note that the second step is not always present and it is deemed unnecessary by some~\cite{FaceNet}.
 
+\include{chapters/face-recognition/systems}
+
+\include{chapters/face-recognition/face-detection}
+
 \section{Datasets}\label{sec:datasets}
 In this section, I will briefly describe datasets used for training and evaluation of facial recognition models.
 There are too many different datasets used in practice.
@@ -76,6 +80,19 @@ As the name implies, the dataset contains images of celebrities.
 In this context, celebrity is assumed to be anyone with frequent online presence.
 This became a controversial issue, and as a result, Microsoft pulled the dataset off the Internet.
 
-\include{chapters/face-recognition/face-detection}
+\subsection{Czech News}\label{subsec:czenew}
+Czech News is a dataset which was created from the recordings of evening news on the czech public television broadcast
+(Česká Televize).
+The dataset consists of 15 videos and the same amount of annotation files in \textit{json}\footnote{An
+open-standard file format that uses human-readable text to transmit data objects consisting of attribute–value pairs
+and array data types.} format.
 
-\include{chapters/face-recognition/systems}
+In every annotation file, there is a dictionary object, where key is a name, and value is a list of detections.
+Every detection contains information about the frame and the position of the face.
+This information is used to process the dataset.
+The reference face position was selected by a human.
+
+In the dataset there are 1238 identities and 732607 detections.
+
+As I mentioned in the section about EyeFace SDK~\ref{subsec:eyeface}, this dataset is used to evaluate my
+implementation of the face recognition algorithm (chapter~\ref{ch:implementation}).

@@ -47,28 +47,18 @@ Libraries \textit{NumPy} and \textit{PyTorch}~\cite{PyTorch} are extensively use
     \caption{Standard image dataset format}
     \label{fig:dataset}
 \end{wrapfigure}
-The goal of preprocessing is to convert the input dataset~\ref{subsec:dataset-description} to the standard format.
+The goal of preprocessing is to convert the input dataset (Czech News~\ref{subsec:czenew}) to the standard format.
 The standardized dataset consists of directories with each directory representing one identity/label.
 In these directories, there are images corresponding to the identity.
 In this case, the images contain faces in different positions.
 
 The desired format is visualized in figure~\ref{fig:dataset}.
-
-\subsection{Dataset Description}\label{subsec:dataset-description}
-The input dataset consists of 15 videos and the same amount of annotation files in \textit{json}\footnote{An
-open-standard file format that uses human-readable text to transmit data objects consisting of attribute–value pairs
-and array data types.} format.
-
-In every annotation file, there is a dictionary object, where key is a name, and value is a list of detections.
-Every detection contains information about the frame and the position of the face.
-This information is used to process the dataset.
-The reference face position was selected by a human.
+\newpage
+As I mentioned in the dataset description~\ref{subsec:czenew}, the area containing face was selected by human.
 Because of that, the geometry of the area is not always consistent.
 This significantly decreases the model performance.
-For this reason, as is described in the following section~\ref{subsec:preproalgo}, this reference position is not
+For this reason, as is described in the section~\ref{subsec:preproalgo}, this reference position is not
 used directly in the algorithm.
-
-In the dataset there are 1238 identities and 732607 detections.
 
 \subsection{Preprocessing Algorithm}\label{subsec:preproalgo}
 Before the presentation of the algorithm it is necessary to define "Intersection over Union (IoU)."
