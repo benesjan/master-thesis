@@ -15,8 +15,9 @@ I have two ideas which could lead to the improvements in system's performance:
     an initialization for a new model being trained on a data from the same domain.} the model again is one way to
     improve the system.
     \item \textit{Better face detection engine.} An area where the system is lacking is the face detection engine.
-    The detector available in the Eyedea SDK seems to be significantly more robust than the one used in this work.
+    The detector available in the EyeFace SDK~\ref{subsec:eyeface} seems to be significantly more robust than the one
+    used in this work.
     This manifested itself when looking at the images of faulty MTCNN detection (see~\ref{fig:faulty_bbox}).
-    Eyedea detector is better at handling edge cases (e.g. white stripe over part of the face).
+    EyeFace detector is better at handling edge cases (e.g. white stripe over part of the face).
     Such edge cases lead to MTCNN producing false negatives.
 \end{itemize}
