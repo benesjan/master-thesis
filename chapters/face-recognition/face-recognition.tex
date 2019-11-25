@@ -81,15 +81,69 @@ In this context, celebrity is assumed to be anyone with frequent online presence
 This became a controversial issue, and as a result, Microsoft pulled the dataset off the Internet.
 
 \subsection{Czech News}\label{subsec:czenew}
+\begin{wrapfigure}[18]{r}{0pt}
+    \centering
+    \raisebox{0pt}[\dimexpr\height-0.831\baselineskip\relax]{%
+    \begin{forest}
+        for tree={
+        font=\ttfamily,
+        grow'=0,
+        child anchor=west,
+        parent anchor=south,
+        anchor=west,
+        calign=first,
+        edge path={
+        \noexpand\path [draw, \forestoption{edge}]
+        (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+        },
+        before typesetting nodes={
+        if n=1
+        {insert before={[,phantom]}}
+        {}
+        },
+        fit=band,
+        before computing xy={l=15pt},
+        }
+        [annotations
+        [name1
+        [detections
+        [detection1
+        [bounding\_box]
+        [frame\_number]
+        ]
+        [detection2
+        [bounding\_box]
+        [frame\_number]
+        ]
+        [\ldots]
+        ]
+        ]
+        [name2
+        [detections
+        [detection1
+        [bounding\_box]
+        [frame\_number]
+        ]
+        [\ldots]
+        ]
+        ]
+        [\ldots]
+        ]
+    \end{forest}
+    }
+    \caption{Format of annotations}
+    \label{fig:annotations}
+\end{wrapfigure}
 Czech News is a dataset which was created from the recordings of evening news on the czech public television broadcast
 (Česká Televize).
 The dataset consists of 15 videos and the same amount of annotation files in \textit{json}\footnote{An
 open-standard file format that uses human-readable text to transmit data objects consisting of attribute–value pairs
 and array data types.} format.
 
-In every annotation file, there is a dictionary object, where key is a name, and value is a list of detections.
-Every detection contains information about the frame and the position of the face.
-This information is used to process the dataset.
+In every annotation file (visualized in figure~\ref{fig:annotations}), there is a dictionary object,
+where key is a name, and value is a list of detections.
+Every detection contains information about the frame (frame number) and the position of the face (bounding box).
+This information is later used to process the dataset (section~\ref{sec:data-preprocessing}).
 The reference face position was selected by a human.
 
 In the dataset there are 1238 identities and 732607 detections.
