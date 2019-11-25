@@ -68,6 +68,8 @@ This significantly decreases the model performance.
 For this reason, as is described in the following section~\ref{subsec:preproalgo}, this reference position is not
 used directly in the algorithm.
 
+In the dataset there are 1238 identities and 732607 detections.
+
 \subsection{Preprocessing Algorithm}\label{subsec:preproalgo}
 Before the presentation of the algorithm it is necessary to define "Intersection over Union (IoU)."
 As the name implies, IoU is computed as a fraction with intersection area in the numerator and union area in the
@@ -88,7 +90,7 @@ The preprocessing algorithm consists of seven steps:
     \item \label{itm:pre4} Then I detect all the faces in the frame using MTCNN detector.
     The detector returns coordinates of the bounding boxes\footnote{See footnote on page~\pageref{foot:bbox}} and the
     facial landmarks\footnote{Salient regions of the face.}.
-    \item I select the detection which meets the following two conditions:
+    \item \label{itm:pre5} I select the detection which meets the following two conditions:
     \begin{enumerate}
         \item has the biggest IoU with reference of all the detections;
         \item the IoU value is at least \textbf{0.5} (This value has been determined experimentally as
@@ -106,6 +108,11 @@ The preprocessing algorithm consists of seven steps:
     \item In the last step, I save the image to a location defined by the standardized dataset format
     (\path{dataset/name/image_128x128.jpg}).
 \end{enumerate}
+
+The processed dataset contains 791 identities and 478529 images.
+The conditions in step~\ref{itm:pre5} were not met 254078 times.
+This resulted in the loss of the same amount of images and 447 identities.
+While the loss seems to be significant, the resulting amount of images is sufficient for system evaluation.
 
 Having the dataset in the desired format we can proceed with feature extraction.
 
