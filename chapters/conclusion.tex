@@ -1,9 +1,29 @@
 \chapter{Conclusion}\label{ch:conclusion}
-In the introduction~\ref{sec:goals} I stated the goals of this study.
+The main topic of this thesis is automatic face recognition.
 
-The main objective was to implement a state-of-the-art algorithm and compare its performance with a commercial system.
-Given that the performance of my system exceeded that of commercial one by two percents, I would consider the goals
-of this thesis as completed.
+In the introduction~\ref{sec:goals} I stated four goals of this study.
+
+First goal was to provide an overview of modern facial recognition methods.
+I split this overview into three parts.
+The first of these is a chapter about convolutional neural networks~\ref{ch:cnn} (CNNs), which are the building
+block of modern facial recognition systems.
+The second one is a chapter called Facial Recognition~\ref{ch:face-rec}.
+In this part I describe how the end-to-end facial recognition system works.
+The last part (Loss Functions\ref{ch:loss-functions}) focuses on the research of loss functions which perform
+especially well in facial recognition tasks.
+
+Second goal was to implement a state-of-the-art algorithm.
+The description of the algorithm is in the chapter~\ref{ch:implementation}.
+The implementation utilizes the ArcFace research~\ref{sec:arcface}.
+
+Third and fourth goal was to evaluate my algorithm's performance and compare the results with commercial one
+(EyeFace SDK~\ref{subsec:eyeface}).
+My algorithm exceeded the commercial system by two percents~\ref{subsec:syseval}.
+
+To sum up the thesis, the assumption that open-source and freely available research and algorithms exceed
+their commercial counterparts has been proven correct.
+Even though the results are good, there is still a room for improvement (see section~\ref{sec:possible-improvements}).
+\newpage
 
 \section{Possible Improvements}\label{sec:possible-improvements}
 I have two ideas which could lead to the improvements in system's performance:
