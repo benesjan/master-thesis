@@ -39,6 +39,15 @@ This has proven to be an effective way of using deep neural networks to increase
 
 ResNets are widely used in the field of facial recognition as well as in the field of computer vision as a whole.
 
+In the experimental part I use 18-layer version called ResNet-18 (see section~\ref{ch:implementation}).
+
+\subsubsection{Architecture of ResNet-18}\label{subsubsec:resnet18}
+In the architecture, there are 17 convolutional layers and 1 dense layer.
+As is usual, the dense layer is placed at the output.
+Each of these layers is followed by batch normalization.
+The dimensionality of the first layer's feature map is reduced by max pooling.
+ReLu is used extensively within the whole architecture.
+
 \subsection{DenseNet}\label{subsec:densenet}
 DenseNet~\cite{DenseNet} is a type of CNN~\ref{ch:cnn} which was introduced in 2017.
 The difference from regular CNNs is that every layer is connected to all the subsequent layers.

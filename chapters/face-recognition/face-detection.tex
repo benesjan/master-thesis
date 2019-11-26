@@ -74,6 +74,12 @@ In the last stage, we take the boxes from the stage 2 and copy the pixel values 
 If there are any boxes which cross the image bounds, we deal with them in the same way as in the previous stage,
 i.e., we fill the empty space with zeros.
 
+\begin{wrapfigure}[18]{r}{0pt}
+\centering
+\includegraphics[width=0.6\columnwidth]{images/face-recognition/mtcnn.png}
+\caption{MTCNN face detection pipeline~\cite{MTCNN}.}
+\label{fig:mtcnn}
+\end{wrapfigure}
 Now we resize the images to be of $48 \times 48$ pixels and feed them into a neural network called
 \textbf{The Output Network} (O-Net).
 
@@ -83,11 +89,5 @@ the coordinates of the bounding box, the coordinates of the facial landmarks and
 In the final processing step of the whole MTCNN algorithm, we get rid of the boxes with a low confidence score,
 we standardize the coordinates of both the landmarks and the boxes, and  we filter the boxes with NMS.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\columnwidth]{images/face-recognition/mtcnn.png}
-    \caption{MTCNN face detection pipeline~\cite{MTCNN}.}
-    \label{fig:mtcnn}
-\end{figure}
 
 Figure~\ref{fig:mtcnn} is a visualization of this three-stage process.
