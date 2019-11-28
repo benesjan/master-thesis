@@ -35,11 +35,10 @@ figure~\ref{fig:ResNet}.
 \end{figure}
 
 The skip connections are implemented as elementwise addition and they let the in-between layers fit a residual mapping.
-This has proven to be an effective way of using deep neural networks to increase accuracy.
 
 ResNets are widely used in the field of facial recognition as well as in the field of computer vision as a whole.
 
-In the experimental part I use 18-layer version called ResNet-18 (see section~\ref{ch:implementation}).
+In the experimental part, I use 18-layer version called ResNet-18 (see section~\ref{ch:implementation}).
 
 \subsubsection{Architecture of ResNet-18}\label{subsubsec:resnet18}
 In the architecture, there are 17 convolutional layers and 1 dense layer.
@@ -65,7 +64,7 @@ The block of layers is illustrated in the figure~\ref{fig:DenseNet}.
 DenseNets implement the connections with preceding layers differently than ResNets.
 While ResNets use elementwise addition, DenseNets concatenate the feature maps.
 The big size of the feature map is not an issue because it is fed as an input into a convolutional layer,
-and consequently does not require training more parameters.
+and consequently, the training does not require training more parameters.
 
 DenseNets have several compelling advantages~\cite{DenseNet}.
 They alleviate the vanishing-gradient problem, strengthen feature propagation, encourage feature reuse, and
