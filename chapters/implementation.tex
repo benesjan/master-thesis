@@ -112,10 +112,10 @@ is reduced to the set of feature vectors.
 In this study this process is carried out by feeding the input image $x_i \in \mathbb{R}^{128\times128 }$ to the CNN model.
 On the output we retrieve a feature vector $y_i \in \mathbb{R}^{1024}$.
 
-The model used is 18-layer ResNet~\ref{subsec:resnet} which was trained under a supervision of the ArcFace loss.
+The model used is 18-layer ResNet~\ref{subsec:resnet} which was trained under a supervision of the ArcFace loss
+on CASIA WebFace dataset~\ref{subsec:casia}.
 The training process was not executed as part of this study since the trained model is freely available online.
 The model was downloaded from the ArcFace implementation repository~\cite{ArcFacePyTorch}.
-The information about the dataset on which the model was trained is unknown.
 
 \subsection{Feature Extraction Algorithm}\label{subsec:feexalgo}
 The feature extraction algorithm consists of 6 steps:
