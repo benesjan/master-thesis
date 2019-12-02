@@ -116,8 +116,10 @@ To name these concept specifically, they are Batch Normalization~\ref{subsec:bat
 Rectifier~\ref{subsec:rectifier} and Padding~\ref{subsec:padding}.
 
 \subsection{Batch Normalization}\label{subsec:batchnorm}
-Batch Normalization~\cite{BatchNormalization} is a method of reducing the negative impact of \textit{internal covariate
-shift} upon the model training.
+Batch Normalization is a method of speeding up the training process of Artificial Neural
+Networks (ANNs)~\cite{BatchNormalization}.
+According to the authors, this feat is achieved by a reduction of the negative impact of \textit{internal covariate
+shift}.
 \textit{Covariate shift} is a change in the input distribution of learning systems.
 When this concept is applied not to the whole system, but only to its part, we call this phenomenon an \textit{internal
 covariate shift}.
@@ -132,6 +134,16 @@ and variances of layer inputs.
 The mean and variance is computed over the current batch which is the reason why this method is called Batch
 Normalization.
 
+However, new research has shown that the \textit{internal covariate shift} might not be the main
+reason for the improved speed of convergence~\cite{BNormCorrection}.
+The researches reintroduced the covariate shift into the training process by an injection of i.i.d. noise sampled
+from a non-zero mean and non-unit variance distribution into the outputs of the Batch Normalization layer.
+Surprisingly, the change in the speed of convergence was negligible.
+According to the research paper, the profound effects of Batch Normalization are caused by the reparametrization
+of the underlying optimization problem into a form, which is more stable and smooth.
+These two traits result in a training process with gradients that have higher predictive power.
+This enables faster and more effective optimization.
+
 The output $y_i$ of the normalization step is computed using the following formula:
 \begin{equation}
     y_i = \gamma \bar{x}_i + \beta,
@@ -140,6 +152,14 @@ where $\bar{x}_i$ is the average of the current batch.
 Parameters $\gamma$ and $\beta$ are adjusting scale and shift, respectively.
 These parameters are learned during training.
 They were incorporated into the formula in order to restore the representative power of the network.
+
+\subsection{Padding}\label{subsec:padding}
+To avoid loss of information at the edges of the image we usually use a method called \textit{padding}.
+This technique increases the image dimension by pixel addition around the original image.
+There are few padding variants which are differentiated by the value of the new pixels.
+The most common ones are \textit{zero padding} and \textit{reflective padding}.
+The first-mentioned type, as the name implies, sets the new pixels to zero.
+The second one is more sophisticated and consists of mirroring of the neighboring pixels.
 
 \subsection{Rectifier}\label{subsec:rectifier}
 
@@ -163,13 +183,5 @@ In CNNs ReLUs are usually positioned at the output of convolutional layer~\ref{s
 The advantage of ReLU is its efficacy during the training and the reduced likelihood of a vanishing
 gradient\footnote{\label{foot:vangrad}A situation where a deep neural network is unable to propagate useful gradient
 information from the output end of the model back to the layers near the input end of the model.}.
-
-\subsection{Padding}\label{subsec:padding}
-To avoid loss of information at the edges of the image we usually use a method called \textit{padding}.
-This technique increases the image dimension by pixel addition around the original image.
-There are few padding variants which are differentiated by the value of the new pixels.
-The most common ones are \textit{zero padding} and \textit{reflective padding}.
-The first-mentioned type, as the name implies, sets the new pixels to zero.
-The second one is more sophisticated and consists of mirroring of the neighboring pixels.
 
 \include{chapters/cnn/models}
